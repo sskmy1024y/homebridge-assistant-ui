@@ -1,4 +1,5 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { MessageLogDto } from './message-log.dto';
 import { MessageLogService } from './message-log.service';
 
 @Controller('message-log')
@@ -11,7 +12,7 @@ export class MessageLogController {
   }
 
   @Post()
-  addMemo(@Param('sender') sender: string, @Param('message') message: string) {
-      return this.service.addMessageLog(sender, message);
+  addMemo(@Body() body: MessageLogDto) {
+      return this.service.addMessageLog(body.sender, body.message);
   }
 }

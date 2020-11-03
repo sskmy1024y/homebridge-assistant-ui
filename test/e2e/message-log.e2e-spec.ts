@@ -3,9 +3,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { ValidationPipe } from '@nestjs/common';
 
-import { AppModule } from '../../src/app.module';
+import { MessageLogModule } from '../../src/modules/message-log/message-log.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { MessageLog } from '../../src/entities/messageLog.entity';
 
-describe('AppController (e2e)', () => {
+describe('MessageLogController (e2e)', () => {
   let app: NestFastifyApplication;
 
   beforeAll(async () => {
@@ -14,7 +16,7 @@ describe('AppController (e2e)', () => {
     process.env.UIX_CONFIG_PATH = path.resolve(process.env.UIX_STORAGE_PATH, 'config.json');
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [TypeOrmModule.forRoot(), TypeOrmModule.forFeature([MessageLog]), MessageLogModule]
     }).compile();
 
     app = moduleFixture.createNestApplication<NestFastifyApplication>(new FastifyAdapter());
@@ -28,15 +30,30 @@ describe('AppController (e2e)', () => {
     await app.getHttpAdapter().getInstance().ready();
   });
 
-  it('GET /', async () => {
+  it('GET /message-log', async () => {
     const res = await app.inject({
       method: 'GET',
-      path: '/'
+      path: '/message-log'
     });
 
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual('Hello World!');
+    expect(res.json()).toEqual([]);
   });
+
+  it('POST /message-log (valid send message)', async () => {
+    const res = await app.inject({
+      method: 'POST',
+      path: '/message-log',
+      payload: {
+        sender: 'user',
+        message: 'aaaaaaaaa'
+      }
+    });
+
+    expect(res.statusCode).toEqual(201);
+    expect(res.json()).toHaveProperty('identifiers');
+  });
+
 
   afterAll(async () => {
     await app.close();

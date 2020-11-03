@@ -14,6 +14,7 @@ export class MessageLogService {
     const messageLog = new MessageLog()
     messageLog.sender = sender;
     messageLog.message = message;
+    messageLog.createdAt = new Date();
 
     return this.messageLogRepository.insert(messageLog)
   }
