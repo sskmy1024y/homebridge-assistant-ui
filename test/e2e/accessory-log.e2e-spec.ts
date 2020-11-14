@@ -3,27 +3,28 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { ValidationPipe } from '@nestjs/common';
 
-import { MessageLogModule } from '../../src/modules/message-log/message-log.module';
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
-import { MessageLog } from '../../src/entities/messageLog.entity';
-import { MessageLogDto } from '../../src/modules/message-log/message-log.dto';
+import { AccessoryLog } from '../../src/entities/accessoryLog.entity';
+import { AccessoryLogDto } from '../../src/modules/accessory-log/accessory-log.dto';
+import { AccessoryLogModule } from '../../src/modules/accessory-log/accessory-log.module';
 
-describe('MessageLogController (e2e)', () => {
+describe('AccessoryLogController (e2e)', () => {
   let app: NestFastifyApplication;
 
-  const messageLogs = [
+  const accessoryLog : AccessoryLog[] = [
     {
       uuid: "3e2b85a1-21cd-4b10-ae5b-abe8fe09305d",
-      sender: 'user',
-      message: 'hello world!',
+      accessoryUuid: '32e291d1-295a-4b45-8be8-663824df1bb0',
+      accessoryType: 'Thermostat',
+      value: "{'TargetTemperature': 28}",
       createdAt: new Date(2020, 10, 10, 9, 50)
     }
   ]
 
   const MockRepository = {
-    provide: getRepositoryToken(MessageLog),
+    provide: getRepositoryToken(AccessoryLog),
     useValue: {
-      find: () => messageLogs,
+      find: () => accessoryLog,
       insert: entity => ({
         "identifiers": [
             {
@@ -36,10 +37,10 @@ describe('MessageLogController (e2e)', () => {
                 "createdAt": entity.createdAt
             }
         ],
-        "raw": [...messageLogs, entity].length
+        "raw": [...accessoryLog, entity].length
       }),
       update: (id, entity) => entity,
-      delete: () => messageLogs.splice(0, 1),
+      delete: () => accessoryLog.splice(0, 1),
     },
   }
 
@@ -49,7 +50,7 @@ describe('MessageLogController (e2e)', () => {
     process.env.UIX_CONFIG_PATH = path.resolve(process.env.UIX_STORAGE_PATH, 'config.json');
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [TypeOrmModule.forRoot(), TypeOrmModule.forFeature([MessageLog]), MessageLogModule]
+      imports: [TypeOrmModule.forRoot(), TypeOrmModule.forFeature([AccessoryLog]), AccessoryLogModule]
     }).overrideProvider(MockRepository.provide).useValue(MockRepository.useValue).compile();
 
     app = moduleFixture.createNestApplication<NestFastifyApplication>(new FastifyAdapter());
@@ -63,25 +64,26 @@ describe('MessageLogController (e2e)', () => {
     await app.getHttpAdapter().getInstance().ready();
   });
 
-  it('GET /message-log', async () => {
+  it('GET /accessory-log', async () => {
     const res = await app.inject({
       method: 'GET',
-      path: '/message-log'
+      path: '/accessory-log'
     });
 
     expect(res.statusCode).toEqual(200);
-    expect(res.json()).toEqual(JSON.parse(JSON.stringify(messageLogs)));
+    expect(res.json()).toEqual(JSON.parse(JSON.stringify(accessoryLog)));
   });
 
-  it('POST /message-log (valid send message)', async () => {
-    const payload : MessageLogDto = {
-      sender: 'user',
-      message: 'aaaaaaaaa'
+  it('POST /accessory-log (valid send accessory)', async () => {
+    const payload : AccessoryLogDto = {
+      accessoryType: 'Light Sensor',
+      accessoryUUID: '2e1ff47c-f4ac-4b00-a09b-06d165cb6e31',
+      value: "{'CurrentAmbientLightLevel': 109}"
     }
 
     const res = await app.inject({
       method: 'POST',
-      path: '/message-log',
+      path: '/accessory-log',
       payload
     });
 
