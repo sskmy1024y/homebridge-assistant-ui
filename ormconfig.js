@@ -7,15 +7,12 @@ const path = require('path')
 const env = process.env.NODE_ENV
 
 const dbPath =
-  process.env.UIX_DATABASE_PATH || env === 'production'
-    ? path.resolve(os.homedir(), '.homebridge/hb-assistant.sqlite')
+  process.env.AUI_DATABASE_PATH || env === 'production'
+    ? path.resolve(os.homedir(), '.homebridge', 'hb-assistant.sqlite')
     : './data/hb-assistant.sqlit'
 
 // Use ts for e2e testing
-const entitiesPath =
-  env === 'test'
-    ? './src/entities/**/*.entity.ts'
-    : './dist/entities/**/*.entity.js'
+const entitiesPath = env === 'test' ? './src/entities/**/*.entity.ts' : './dist/entities/**/*.entity.js'
 
 const config = {
   type: 'sqlite',

@@ -3,11 +3,14 @@ import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify
 import { ValidationPipe } from '@nestjs/common'
 
 import { AppModule } from '../../src/app.module'
+import * as path from 'path'
 
 describe('AppController (e2e)', () => {
   let app: NestFastifyApplication
 
   beforeAll(async () => {
+    process.env.AUI_BASE_PATH = path.resolve(__dirname, '../../')
+
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule]
     }).compile()
