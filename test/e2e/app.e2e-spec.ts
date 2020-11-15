@@ -1,8 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import {
-  FastifyAdapter,
-  NestFastifyApplication
-} from '@nestjs/platform-fastify'
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify'
 import { ValidationPipe } from '@nestjs/common'
 
 import { AppModule } from '../../src/app.module'
@@ -15,9 +12,7 @@ describe('AppController (e2e)', () => {
       imports: [AppModule]
     }).compile()
 
-    app = moduleFixture.createNestApplication<NestFastifyApplication>(
-      new FastifyAdapter()
-    )
+    app = moduleFixture.createNestApplication<NestFastifyApplication>(new FastifyAdapter())
 
     app.useGlobalPipes(
       new ValidationPipe({

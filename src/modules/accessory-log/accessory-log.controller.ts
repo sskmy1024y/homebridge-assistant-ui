@@ -13,10 +13,6 @@ export class AccessoryLogController {
 
   @Post()
   addMemo(@Body() body: AccessoryLogDto) {
-    return this.service.addAccessoryLog(
-      body.accessoryUUID,
-      body.accessoryType,
-      body.value
-    )
+    return this.service.addAccessoryLog(body.accessoryUUID, body.accessoryType, body.value)
   }
 }

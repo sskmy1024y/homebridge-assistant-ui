@@ -1,8 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import {
-  FastifyAdapter,
-  NestFastifyApplication
-} from '@nestjs/platform-fastify'
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify'
 import { ValidationPipe } from '@nestjs/common'
 
 import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm'
@@ -48,19 +45,13 @@ describe('AccessoryLogController (e2e)', () => {
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [
-        TypeOrmModule.forRoot(),
-        TypeOrmModule.forFeature([AccessoryLog]),
-        AccessoryLogModule
-      ]
+      imports: [TypeOrmModule.forRoot(), TypeOrmModule.forFeature([AccessoryLog]), AccessoryLogModule]
     })
       .overrideProvider(MockRepository.provide)
       .useValue(MockRepository.useValue)
       .compile()
 
-    app = moduleFixture.createNestApplication<NestFastifyApplication>(
-      new FastifyAdapter()
-    )
+    app = moduleFixture.createNestApplication<NestFastifyApplication>(new FastifyAdapter())
 
     app.useGlobalPipes(
       new ValidationPipe({
