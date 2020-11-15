@@ -22,6 +22,7 @@
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-fastify": "^7.4.4",
     "@nestjs/typeorm": "^7.1.4",
+    "fastify-multipart": "^3.3.0",
     "fastify-static": "^3.3.0",
     "fs-extra": "^9.0.1",
     "reflect-metadata": "^0.1.13",

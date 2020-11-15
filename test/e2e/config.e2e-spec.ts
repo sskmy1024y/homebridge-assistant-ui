@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigModule } from '../../src/core/config/config.module'
 import * as path from 'path'
 import * as fs from 'fs-extra'
+import fmp from 'fastify-multipart'
 
 describe('ConfigController (e2e)', () => {
   let app: NestFastifyApplication
@@ -24,6 +25,7 @@ describe('ConfigController (e2e)', () => {
 
     app = moduleFixture.createNestApplication<NestFastifyApplication>(new FastifyAdapter())
 
+    app.register(fmp)
     app.useGlobalPipes(
       new ValidationPipe({
         whitelist: true,

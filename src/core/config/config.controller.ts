@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Put } from '@nestjs/common'
+import { Body, Controller, Get, Post, Put, Req, Res } from '@nestjs/common'
 import { ConfigService } from './config.service'
 import { AssistantConfigDto } from './config.dto'
+import { FastifyRequest, FastifyReply } from 'fastify'
 
 @Controller('config')
 export class ConfigController {
@@ -19,5 +20,10 @@ export class ConfigController {
 
     this.service.save()
     return { status: 'ok' }
+  }
+
+  @Post('vrm')
+  async uploadVRMFile(@Req() req: FastifyRequest, @Res() res: FastifyReply<any>) {
+    return await this.service.uploadVRMFile(req, res)
   }
 }

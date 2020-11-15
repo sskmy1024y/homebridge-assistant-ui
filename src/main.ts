@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core'
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify'
 import * as path from 'path'
 import * as fs from 'fs-extra'
+import fmp from 'fastify-multipart'
 import { AppModule } from './app.module'
 
 process.env.AUI_BASE_PATH = path.resolve(__dirname, '../')
@@ -26,6 +27,8 @@ async function bootstrap() {
     }
   })
 
+  app.register(fmp)
+  app.enableCors()
   app.setGlobalPrefix('/api')
 
   await app.listen(4200, '0.0.0.0')
