@@ -12,6 +12,10 @@
     "baseUrl": "./",
     "incremental": true
   },
+  "include": [
+    "**/*.ts",
+    "**/*.js"
+  ],
   "exclude": [
     "node_modules",
     "./dist",

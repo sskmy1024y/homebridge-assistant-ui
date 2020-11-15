@@ -1,16 +1,21 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn
+} from 'typeorm'
 
 @Entity()
 export class MessageLog {
-    @PrimaryGeneratedColumn('uuid')
-    uuid: string;
+  @PrimaryGeneratedColumn('uuid')
+  uuid: string
 
-    @Column({ length: 500 })
-    sender: string;
+  @Column({ length: 500 })
+  sender: string
 
-    @Column('text')
-    message: string;
+  @Column('text')
+  message: string
 
-    @CreateDateColumn({ type: "datetime" })
-    createdAt: Date;
+  @CreateDateColumn({ type: 'datetime' })
+  createdAt: Date
 }

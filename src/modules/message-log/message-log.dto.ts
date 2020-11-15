@@ -1,13 +1,13 @@
-import { IsString, IsNotEmpty, IsDefined } from 'class-validator';
+import { IsString, IsNotEmpty, IsDefined } from 'class-validator'
 
 export class MessageLogDto {
   @IsDefined()
   @IsString()
   @IsNotEmpty()
-  sender: string;
+  sender: string
 
   @IsDefined()
   @IsString()
   @IsNotEmpty()
-  message: string;
+  message: string
 }

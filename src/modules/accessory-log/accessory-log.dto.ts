@@ -1,18 +1,18 @@
-import { IsString, IsNotEmpty, IsDefined } from 'class-validator';
+import { IsString, IsNotEmpty, IsDefined } from 'class-validator'
 
 export class AccessoryLogDto {
   @IsDefined()
   @IsString()
   @IsNotEmpty()
-  accessoryUUID: string;
+  accessoryUUID: string
 
   @IsDefined()
   @IsString()
   @IsNotEmpty()
-  accessoryType: string;
+  accessoryType: string
 
   @IsDefined()
   @IsString()
   @IsNotEmpty()
-  value: string;
+  value: string
 }
