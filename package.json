@@ -17,6 +17,10 @@
     "test:e2e": "NODE_ENV=test jest --forceExit --detectOpenHandles --verbose=true --silent --config ./test/jest-e2e.json",
     "migrate": "nest build && typeorm migration:run"
   },
+  "engines": {
+    "node": ">=10.17.0",
+    "homebridge": ">=0.4.22"
+  },
   "dependencies": {
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
