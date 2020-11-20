@@ -12,7 +12,10 @@ const dbPath =
     : './data/hb-assistant.sqlit'
 
 // Use ts for e2e testing
-const entitiesPath = env === 'test' ? './src/entities/**/*.entity.ts' : './dist/entities/**/*.entity.js'
+const entitiesPath =
+  env === 'test'
+    ? path.resolve(__dirname, 'src/entities/**/*.entity.ts')
+    : path.resolve(__dirname, 'dist/entities/**/*.entity.js')
 
 const config = {
   type: 'sqlite',

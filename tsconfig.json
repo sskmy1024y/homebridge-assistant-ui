@@ -9,12 +9,13 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true
+    "baseUrl": ".",
+    "incremental": true,
+    "allowJs": true
   },
   "include": [
-    "**/*.ts",
-    "**/*.js"
+    "src/**/*.ts",
+    "src/**/*.js"
   ],
   "exclude": [
     "node_modules",
