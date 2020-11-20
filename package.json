@@ -18,8 +18,7 @@
     "migrate": "nest build && typeorm migration:run"
   },
   "engines": {
-    "node": ">=10.17.0",
-    "homebridge": ">=0.4.22"
+    "node": ">=10.17.0"
   },
   "dependencies": {
     "@nestjs/common": "^7.0.0",
@@ -59,5 +58,8 @@
     "ts-node": "9.0.0",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.7.4"
+  },
+  "peerDependencies": {
+    "homebridge-config-ui-x": "^4.32.0"
   }
 }
