@@ -1,0 +1,75 @@
+// 古いファイルなどで以下の指定を変更してチェックしたい場合は
+// http://www.jshint.com/docs/
+// を参考にファイルごとに個別に指定してください。ファイルの先頭に書くこと。
+//
+// JSHint Options:
+// http://www.jshint.com/docs/options/
+// http://www.htmlhifive.com/conts/web/view/library/JSLint_JSHint
+{
+  // いきなり存在しても問題ない名前空間
+  "globals": {
+    "Handlebars": false,
+    "Modernizr": false,
+    "Tinycon": false,
+    "colon": false,
+    "p": false,
+    "pixiv": false,
+    "TWTR": false,
+    "_gaq": false,
+    "__pixiv__": false
+  },
+  "browser": true,
+  "devel": true,
+  "jquery": true,
+  // "prototypejs": true,
+  "strict": true,
+  // ===、!==を強制
+  // 型変換して比較したい時は部分的に解除すること: /*jshint eqeqeq:false */
+  "eqeqeq": true,
+  // ネイティブオブジェクトの拡張を禁止
+  "freeze": true,
+  // コンストラクタは大文字で始める
+  "newcap": true,
+  // arguments.callerとarguments.calleeを禁止（後者はそもそもuse strict強制で禁止される）
+  "noarg": true,
+  // 空ブロックを禁止
+  "noempty": true,
+  // シングルクォートで囲む
+  "quotmark": "single",
+  // 宣言のない変数をチェック
+  "undef": true,
+  // 使っていない変数をチェック
+  // 面倒だけどエラーを見つけやすいのでオン。
+  // 外部で使うために宣言だけしている場合は部分的に解除すること: /*jshint unused:false */
+  "unused": true,
+  // 行末の空白を禁止
+  "trailing": true,
+  // 条件文の判定で変数の代入を許容する
+  // よく使う、デバッグの段階で気付くはずなので許可。
+  // 詳細: http://www.jshint.com/docs/options/#boss
+  "boss": true,
+  // 代入、関数呼び出しが予想される箇所での式にとしての利用を許容する
+  // https://github.com/jshint/jshint/issues/23
+  "expr": true,
+  // foo['bar']を許容する（デフォルトではfoo.barを強制）
+  // → Handlebarsのプリコンパイルコードで使われるので許容していたが、
+  // 該当ファイルはJSHintを通さないようにして全体では強制することにした。
+  // "sub": true,
+  // スマートタブの記述を許容する
+  // 参考: http://www.emacswiki.org/emacs/SmartTabs
+  // 特に許容したくないが、コメントアウトしたコードの書式もチェックされてエラーが起こるのでとりあえず許容。
+  // 独自のオプションを作る気はなさそう…:
+  // https://github.com/jshint/jshint/issues/21
+  // https://github.com/jshint/jshint/issues/314
+  // https://github.com/jshint/jshint/pull/669
+  "smarttabs": true,
+  // 変なコンストラクタ記述を許容する
+  // new Date;など()を省略して書くことは日常的にあるので許容。
+  "supernew": true,
+  // strictモードでやばそうなthisの記述を許容する
+  // コンストラクタ関数以外でthisの利用が制限されるのを防ぐ。
+  // ナビ子記法と相性が悪いのでとりあえず許容。ナビ子記法自体はなくしていきたい。
+  // use strictを必須にしているので将来的にはそちらに任せればいい気がする。
+  // http://jslinterrors.com/option-validthis-cant-be-used-in-a-global-scope/
+  "validthis": true
+}

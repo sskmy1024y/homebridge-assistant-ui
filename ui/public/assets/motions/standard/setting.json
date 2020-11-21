@@ -1,0 +1,19 @@
+{
+  "name": "標準",
+  "preset": [
+    {
+      "url": "assets/motions/standard/appearing.vmd",
+      "name": "standerd_enter",
+      "options": {
+        "loop": false
+      }
+    },
+    {
+      "url": "assets/motions/standard/waiting.vmd",
+      "name": "standerd_waiting",
+      "options": {
+        "loop": true
+      }
+    }
+  ]
+}
