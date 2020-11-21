@@ -1,5 +1,7 @@
-import React, { Suspense } from 'react'
-import Viewer, { ViewerProps } from './Viewer'
+import React, { Suspense, lazy } from 'react'
+import { ViewerProps } from './Viewer'
+
+const Viewer = lazy(() => import('./Viewer'));
 
 export default function VRMCanvas({ children, ...props }: ViewerProps) {
   return (

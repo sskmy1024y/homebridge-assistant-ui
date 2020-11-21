@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 
 import { Colors, device } from 'theme'
 import styled from 'styled-components'
@@ -17,8 +17,17 @@ export default function BaseWindow({
   children,
   style
 }: Props) {
+  const [positionX, setPositionX] = useState(0)
+  const [positionY, setPositionY] = useState(0)
+  const [scale, setScale] = useState(1)
+
+  const onDrag = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+    setPositionX(event.clientX)
+    setPositionY(event.clientY)
+  }, [])
+
   return (
-    <WindowContainer style={style}>
+    <WindowContainer draggable={true} onDragEnd={onDrag} style={{top: `${positionX}px`, left: `${positionY}px`, transform: `scale(${scale})`, ...style}}>
       <DeviceName>{deviceName}</DeviceName>
       <Row>
         <IconContainer>{icon}</IconContainer>
@@ -29,6 +38,7 @@ export default function BaseWindow({
 }
 
 const WindowContainer = styled.div`
+  position: absolute;
   width: 480px;
   height: 230px;
   background: ${theme.background.window.main};

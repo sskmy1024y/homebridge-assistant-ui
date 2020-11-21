@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post, Put, Req, Res } from '@nestjs/common'
+import { Body, Controller, Get, HttpCode, Param, Post, Put, Req, Res } from '@nestjs/common'
 import { ConfigService } from './config.service'
 import { AssistantConfigDto } from './config.dto'
 import { FastifyRequest, FastifyReply } from 'fastify'
@@ -9,9 +9,9 @@ export class ConfigController {
 
   @Post()
   @HttpCode(200)
-  getAssistantConfig(@Body() body: { userId: string }) {
+  getAssistantConfig(@Body() body: { userId: string }, @Req() req: FastifyRequest) {
     this.service.setRequestUserId(body.userId)
-    const config = this.service.assistantConfig
+    const config = this.service.uiSettings(req)
     return { status: 'ok', body: config as any }
   }
 
@@ -28,5 +28,11 @@ export class ConfigController {
   @Post('vrm')
   async uploadVRMFile(@Req() req: FastifyRequest, @Res() res: FastifyReply<any>) {
     return await this.service.uploadVRMFile(req, res)
+  }
+
+  @Get('vrm/:userId')
+  async getVRMFile(@Param('userId') userId: string, @Res() res: FastifyReply<any>) {
+    this.service.setRequestUserId(userId)
+    return await this.service.getVRMFile(res)
   }
 }

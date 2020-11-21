@@ -10,3 +10,8 @@ export const useMotionManager = () => {
   const assistant = useAssistant()
   return useMemo(() => assistant?.motionManager ?? null, [assistant])
 }
+
+export const useVRMPath = () => {
+  const vrmPath = useSelector(state => state.vrm.vrmPath)
+  return useMemo(() => vrmPath ?? '', [vrmPath])
+}

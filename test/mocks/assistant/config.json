@@ -3,7 +3,7 @@
   "config": {
     "1": {
       "assistantName": "yui",
-      "vrmPath": "/Users/sho/sho/Develop/Github/homebridge-assistant-ui/data/assistant/avator.vrm",
+      "vrmPath": "./test/.homebridge/assistant/avator.vrm",
       "camera": {
         "position": {
           "x": 0,

@@ -37,6 +37,6 @@ async function bootstrap() {
   app.enableCors()
   app.setGlobalPrefix('/api')
 
-  await app.listen(configService.port, '0.0.0.0')
+  await app.listen(configService.auiPort, '0.0.0.0')
 }
 bootstrap()

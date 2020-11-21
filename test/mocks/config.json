@@ -8,6 +8,10 @@
   "accessories": [],
   "platforms": [
     {
+      "port": 8581,
+      "platform": "config"
+    },
+    {
       "port": 4200,
       "platform": "homebridge-assistant-ui"
     }

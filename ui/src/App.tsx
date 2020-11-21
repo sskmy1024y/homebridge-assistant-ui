@@ -7,14 +7,11 @@ import VRMViewer from 'components/VRMViewer'
 import reset from 'styled-reset'
 import styled, { createGlobalStyle } from 'styled-components'
 
-const motionSetting = './assets/motions/setting.json'
-
 function App() {
   return (
     <>
       <GlobalStyle />
       <VRMViewer
-        motionUrl={motionSetting}
         floorSrc={'./assets/textures/floor-texture.jpg'}
       />
       <UIViewer>

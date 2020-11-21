@@ -20,6 +20,10 @@ describe('ConfigController (e2e)', () => {
     // setup test config
     await fs.copy(path.resolve(__dirname, '../mocks', 'config.json'), process.env.HB_CONFIG_PATH)
     await fs.copy(path.resolve(__dirname, '../mocks', 'assistant', 'config.json'), process.env.AUI_CONFIG_PATH)
+    await fs.copy(
+      path.resolve(__dirname, '../mocks', 'assistant', 'avator.vrm'),
+      path.resolve(process.env.AUI_STORAGE_PATH, 'assistant', 'avator.vrm')
+    )
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [TypeOrmModule.forRoot(), ConfigModule]
@@ -82,6 +86,29 @@ describe('ConfigController (e2e)', () => {
     expect(res.statusCode).toEqual(200)
     expect(res.json().status).toEqual('ok')
     expect(res.json().body.assistantName).toEqual('hanako')
+  })
+
+  it('POST /config (undefined userId)', async () => {
+    const res = await app.inject({
+      method: 'POST',
+      path: '/config',
+      payload: {
+        userId: '100'
+      }
+    })
+
+    expect(res.statusCode).toEqual(200)
+    expect(res.json().status).toEqual('ok')
+    expect(res.json().body.assistantName).toEqual('yui')
+  })
+
+  it('GET /config/vrm/1', async () => {
+    const res = await app.inject({
+      method: 'GET',
+      path: '/config/vrm/1'
+    })
+
+    expect(res.statusCode).toEqual(200)
   })
 
   afterAll(async () => {

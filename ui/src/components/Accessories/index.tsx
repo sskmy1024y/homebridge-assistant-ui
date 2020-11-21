@@ -7,6 +7,7 @@ import { useAccessories } from 'modules/service/selector'
 import { useDispatch, useEffect, useMemo } from 'hooks'
 import React from 'react'
 import SwitchWindow from './SwitchWindow'
+import { getVRMConfig } from 'modules/vrm/operations'
 
 /**
  * Component that creates the required window from the acquired accessory list
@@ -18,6 +19,7 @@ const Accessories = () => {
 
   useEffect(() => {
     dispatch(getAuthToken({ usename: 'admin', password: 'admin' }))
+    dispatch(getVRMConfig({ usename: 'admin', password: 'admin' }))
   }, [dispatch])
 
   useEffect(() => {

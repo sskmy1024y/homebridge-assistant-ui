@@ -4,7 +4,7 @@ import * as os from 'os'
 import * as fs from 'fs-extra'
 import * as stream from 'stream'
 import * as util from 'util'
-import { FastifyRequest } from 'fastify'
+import { FastifyRequest, FastifyReply } from 'fastify'
 
 interface HomebridgeConfig {
   bridge: {
@@ -55,14 +55,12 @@ export class ConfigService {
   public configPath = process.env.HB_CONFIG_PATH || path.resolve(this.storagePath, 'config.json')
   public assistantUiConfigPath =
     process.env.AUI_CONFIG_PATH || path.resolve(this.storagePath, 'assistant', 'config.json')
-  public assistantVrmPath = process.env.AUI_VRM_PATH || path.resolve(this.storagePath, 'assistant', 'avator.vrm')
 
   // package.json
   public package = fs.readJsonSync(path.resolve(process.env.AUI_BASE_PATH, 'package.json'))
 
   public homebridgeConfig: HomebridgeConfig
-  private _assistantConfig: AssistantUIConfig
-  public port: number
+  private _assistantUIConfig: AssistantUIConfig
 
   private _requestUserId: string
 
@@ -76,41 +74,50 @@ export class ConfigService {
 
   public setRequestUserId(userId: string) {
     this._requestUserId = userId
-  }
 
-  get assistantConfig() {
-    const requestUserId = this._requestUserId
-    return (
-      this._assistantConfig.config[requestUserId] ??
-      ({
-        vrmPath: path.resolve(this.storagePath, 'assistant', 'avator.vrm'),
-        assistantName: 'yui',
-        camera: {
-          position: { x: 0, y: 0.8, z: -1.2 },
-          target: { x: 0, y: 0.3, z: 0 }
+    if (!this._assistantUIConfig?.config?.[this._requestUserId]) {
+      this._assistantUIConfig.config = {
+        ...(this._assistantUIConfig?.config ?? {}),
+        [this._requestUserId]: {
+          vrmPath: path.resolve(this.storagePath, 'assistant', 'avator.vrm'),
+          assistantName: 'yui',
+          camera: {
+            position: { x: 0, y: 1.5, z: -1.2 },
+            target: { x: 0, y: 1.2, z: 0 }
+          }
         }
-      } as AssistantConfig)
-    )
+      }
+    }
   }
 
   get assistantName() {
     const requestUserId = this._requestUserId
-    return this._assistantConfig.config[requestUserId].assistantName
+    return this._assistantUIConfig.config[requestUserId].assistantName
   }
 
   set assistantName(name: string) {
     const requestUserId = this._requestUserId
-    this._assistantConfig.config[requestUserId].assistantName = name
+    this._assistantUIConfig.config[requestUserId].assistantName = name
   }
 
   get vrmPath() {
     const requestUserId = this._requestUserId
-    return this._assistantConfig.config[requestUserId].vrmPath
+    return this._assistantUIConfig.config[requestUserId].vrmPath
   }
 
   set vrmPath(path: string) {
     const requestUserId = this._requestUserId
-    this._assistantConfig.config[requestUserId].vrmPath = path
+    this._assistantUIConfig.config[requestUserId].vrmPath = path
+  }
+
+  get auiPort() {
+    const assistantUIConfig = this.homebridgeConfig?.platforms?.find(x => x.platform === 'homebridge-assistant-ui')
+    return assistantUIConfig?.port ?? 4200
+  }
+
+  get hbServicePort() {
+    const hbServiceConfig = this.homebridgeConfig?.platforms?.find(x => x.platform === 'config')
+    return hbServiceConfig?.port ?? null
   }
 
   /**
@@ -122,10 +129,6 @@ export class ConfigService {
     if (!this.homebridgeConfig.bridge) {
       this.homebridgeConfig.bridge = {} as this['homebridgeConfig']['bridge']
     }
-
-    this.port = Array.isArray(this.homebridgeConfig.platforms)
-      ? this.homebridgeConfig.platforms.find(x => x.platform === 'homebridge-assistant-ui').port
-      : 4200
   }
 
   /**
@@ -133,16 +136,47 @@ export class ConfigService {
    */
   public parseAssistantConfig(assistantConfig) {
     if (assistantConfig != null) {
-      this._assistantConfig = assistantConfig
+      this._assistantUIConfig = assistantConfig
     }
 
-    this._assistantConfig.version = this.package.version
+    this._assistantUIConfig = {
+      ...(this._assistantUIConfig ?? { config: {} }),
+      version: this.package.version
+    }
+
     this.save()
   }
 
+  /**
+   * Settings that are sent to the UI
+   */
+  public uiSettings(req: FastifyRequest) {
+    const requestUserId = this._requestUserId
+
+    const config = this._assistantUIConfig.config[requestUserId]
+    const vrmPath = `${req.protocol}://${req.hostname}/api/config/vrm/${requestUserId}`
+
+    if (!fs.existsSync(path.resolve(config.vrmPath))) {
+      fs.copySync(path.resolve(process.env.AUI_BASE_PATH, 'dist/assets', 'avator.vrm'), path.resolve(config.vrmPath))
+    }
+
+    return {
+      version: this._assistantUIConfig.version,
+      vrmPath,
+      hbServicePort: this.hbServicePort,
+      assistantName: config.assistantName,
+      camera: config.camera
+    }
+  }
+
   public save() {
-    fs.outputJsonSync(this.configPath, this._assistantConfig)
+    fs.outputJsonSync(this.assistantUiConfigPath, this._assistantUIConfig)
     return { status: 'ok' }
+  }
+
+  public async getVRMFile(res: FastifyReply<any>) {
+    const stream = fs.createReadStream(path.resolve(this.vrmPath))
+    res.send(stream)
   }
 
   public async uploadVRMFile(req: FastifyRequest, res) {
@@ -164,7 +198,7 @@ export class ConfigService {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const handler = async (_field: string, file: any, _filename: string) => {
       const pipeline = util.promisify(stream.pipeline)
-      const writeStream = fs.createWriteStream(this.assistantVrmPath) //File path
+      const writeStream = fs.createWriteStream(this.vrmPath) //File path
       try {
         await pipeline(file, writeStream)
       } catch (err) {

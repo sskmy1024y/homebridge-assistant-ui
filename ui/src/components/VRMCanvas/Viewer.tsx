@@ -23,12 +23,16 @@ export default function Viewer({ vrmUrl, children }: ViewerProps) {
         dispatch(initMotionManager({ vrm }))
       })
       .catch(console.error)
-  }, [dispatch, gltf, vrmUrl])
+  }, [dispatch, gltf])
 
   const ModelView = useMemo(
     () => motionManager && <Model gltf={gltf} motionManager={motionManager} />,
     [gltf, motionManager]
   )
+
+  if (vrmUrl === '') {
+    return null
+  }
 
   return (
     <Canvas>
