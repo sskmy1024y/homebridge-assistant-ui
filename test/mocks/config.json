@@ -1,0 +1,15 @@
+{
+  "bridge": {
+    "name": "Homebridge 8249",
+    "username": "0E:E4:3D:21:82:49",
+    "port": 51549,
+    "pin": "468-50-917"
+  },
+  "accessories": [],
+  "platforms": [
+    {
+      "port": 4200,
+      "platform": "homebridge-assistant-ui"
+    }
+  ]
+}

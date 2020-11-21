@@ -1,6 +1,11 @@
-import { IsString } from 'class-validator'
+import { IsDefined, IsNotEmpty, IsString } from 'class-validator'
 
 export class AssistantConfigDto {
+  @IsString()
+  @IsDefined()
+  @IsNotEmpty()
+  userId: string
+
   @IsString()
   vrmPath: string
 

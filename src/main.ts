@@ -4,11 +4,14 @@ import * as path from 'path'
 import * as fs from 'fs-extra'
 import fmp from 'fastify-multipart'
 import { AppModule } from './app.module'
+import { ConfigService } from './core/config/config.service'
 
 process.env.AUI_BASE_PATH = path.resolve(__dirname, '../')
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter())
+
+  const configService: ConfigService = app.get(ConfigService)
 
   // serve index.html without a cache
   app.getHttpAdapter().get('/', async (req, res) => {
@@ -31,6 +34,6 @@ async function bootstrap() {
   app.enableCors()
   app.setGlobalPrefix('/api')
 
-  await app.listen(4200, '0.0.0.0')
+  await app.listen(configService.port, '0.0.0.0')
 }
 bootstrap()
