@@ -61,7 +61,6 @@ export class ConfigService {
 
   public homebridgeConfig: HomebridgeConfig
   private _assistantUIConfig: AssistantUIConfig
-
   private _requestUserId: string
 
   constructor() {

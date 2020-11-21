@@ -46,6 +46,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
     "sqlite3": "^5.0.0",
+    "sync-fetch": "^0.3.0",
     "typeorm": "^0.2.28"
   },
   "devDependencies": {
