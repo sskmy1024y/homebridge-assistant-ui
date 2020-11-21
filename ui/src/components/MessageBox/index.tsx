@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { device } from 'theme'
 import { sendMessage } from 'modules/messages'
-import { useAccessories } from 'modules/service/selector'
 import { useDispatch } from 'hooks'
 import { useMessages } from 'modules/messages/selector'
 import MessageBubble, { Direction } from './MessageBubble'
