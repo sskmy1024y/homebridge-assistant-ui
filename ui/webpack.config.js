@@ -58,11 +58,6 @@ function webpackDevConfig(rawEnv, optionArg) {
     resolve: {
       modules: [sourcePath, 'node_modules'],
       extensions: ['.ts', '.tsx', '.js', '.json']
-    },
-    devServer: {
-      contentBase: outputPath,
-      compress: true,
-      disableHostCheck: false
     }
   }
 }
