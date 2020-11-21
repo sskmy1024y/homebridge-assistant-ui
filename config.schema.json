@@ -1,0 +1,98 @@
+{
+  "pluginAlias": "homebridge-assistant-ui",
+  "pluginType": "platform",
+  "singular": true,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "vrmPath": {
+        "title": "VRMPath",
+        "type": "string",
+        "default": "~/.homebridge/assistant/avator.vrm",
+        "required": true
+      },
+      "name": {
+        "title": "AssistantName",
+        "type": "string",
+        "default": "yui",
+        "minLength": 1,
+        "required": true
+      },
+      "camera": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "title": "X",
+                "type": "integer",
+                "default": 0
+              },
+              "y": {
+                "title": "Y",
+                "type": "integer",
+                "default": 0.8
+              },
+              "z": {
+                "title": "Z",
+                "type": "integer",
+                "default": -1.2
+              }
+            }
+          },
+          "target": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "title": "X",
+                "type": "integer",
+                "default": 0
+              },
+              "y": {
+                "title": "Y",
+                "type": "integer",
+                "default": 0.3
+              },
+              "z": {
+                "title": "Z",
+                "type": "integer",
+                "default": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "layout": [
+    "vrmPath",
+    "name",
+    {
+      "type": "flex",
+      "flex-flow": "row wrap",
+      "items": [
+        {
+          "type": "flex",
+          "title": "Camera Position",
+          "flex-flow": "column",
+          "items": [
+            "camera.position.x",
+            "camera.position.y",
+            "camera.position.z"
+          ]
+        },
+        {
+          "type": "flex",
+          "title": "Camera Target",
+          "flex-flow": "column",
+          "items": [
+            "camera.target.x",
+            "camera.target.y",
+            "camera.target.z"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@
   "description": "Provides a home appliance operation assistant using a 3D avatar and a log collection function like PDS.",
   "author": "sho <sskmy1024.y@gmail.com>",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/sskmy1024y/homebridge-assistant-ui.git"
@@ -13,16 +13,18 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:server": "nest start --watch",
-    "watch:ui": "cd ./ui && yarn watch",
+    "watch:ui": "npm run watch --prefix ui",
     "start:prod": "node dist/main",
-    "build:ui": "cd ./ui && yarn build",
+    "build:ui": "npm run build --prefix ui",
     "build:server": "rimraf dist && nest build",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test:e2e": "NODE_ENV=test jest --forceExit --detectOpenHandles --verbose=true --silent --config ./test/jest-e2e.json",
+    "install:ui": "npm install --prefix ui",
     "migrate": "nest build && typeorm migration:run"
   },
   "engines": {
-    "node": ">=10.17.0"
+    "node": ">=10.17.0",
+    "homebridge": ">=0.4.22"
   },
   "dependencies": {
     "@nestjs/common": "^7.0.0",
@@ -65,5 +67,8 @@
   },
   "peerDependencies": {
     "homebridge-config-ui-x": "^4.32.0"
-  }
+  },
+  "keywords": [
+    "homebridge-plugin"
+  ]
 }
