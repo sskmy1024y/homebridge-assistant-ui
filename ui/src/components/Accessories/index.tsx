@@ -1,7 +1,7 @@
 import { HomeKitTypes } from 'models/accessories/HomeKitTypes'
 import { ServiceNS } from 'models/services'
 import { Switch } from 'models/accessories/Switch'
-import { getAuthToken } from 'modules/auth'
+import { getAuthToken, useHbServiceHost } from 'modules/auth'
 import { initWsServiceEvent, useConnectToNamespace } from 'modules/ws'
 import { useAccessories } from 'modules/service/selector'
 import { useDispatch, useEffect, useMemo } from 'hooks'
@@ -14,13 +14,19 @@ import { getVRMConfig } from 'modules/vrm/operations'
  */
 const Accessories = () => {
   const dispatch = useDispatch()
+  const hbServiceHost = useHbServiceHost()
   const accessories = useAccessories()
   const wsService = useConnectToNamespace(ServiceNS.Accessories)
 
   useEffect(() => {
-    dispatch(getAuthToken({ usename: 'admin', password: 'admin' }))
     dispatch(getVRMConfig({ usename: 'admin', password: 'admin' }))
   }, [dispatch])
+
+  useEffect(() => {
+    if (hbServiceHost) {
+      dispatch(getAuthToken({usename: 'admin', password: 'admin', hbServiceHost}))
+    }
+  }, [hbServiceHost, dispatch])
 
   useEffect(() => {
     if (wsService !== null) {

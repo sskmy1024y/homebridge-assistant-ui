@@ -33,10 +33,11 @@ export async function http<T>(request: RequestInfo): Promise<HttpResponse<T>> {
 
 export async function get<T>(
   path: string,
-  query?: string
+  query?: string,
+  host?: string
 ): Promise<HttpResponse<T>> {
   return await http<T>(
-    new Request(`${environment.api.base}/${path}`, {
+    new Request(`${host || environment.api.base}/${path}`, {
       headers,
       method: HttpMethods.Get,
       body: query
@@ -47,10 +48,11 @@ export async function get<T>(
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function post<T>(
   path: string,
-  body?: any
+  body?: any,
+  host?: string
 ): Promise<HttpResponse<T>> {
   return await http<T>(
-    new Request(`${environment.api.base}/${path}`, {
+    new Request(`${host || environment.api.base}/${path}`, {
       headers,
       method: HttpMethods.Post,
       body: JSON.stringify(body) ?? {}
@@ -61,10 +63,11 @@ export async function post<T>(
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function put<T>(
   path: string,
-  body: any
+  body: any,
+  host?: string
 ): Promise<HttpResponse<T>> {
   return await http<T>(
-    new Request(`${environment.api.base}/${path}`, {
+    new Request(`${host || environment.api.base}/${path}`, {
       method: HttpMethods.Put,
       body: JSON.stringify(body) ?? {}
     })

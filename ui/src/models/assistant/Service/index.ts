@@ -54,6 +54,7 @@ export const run = (
     ServiceNS.Accessories,
     rootState.ws,
     rootState.auth.token,
+    rootState.auth.host,
     dispatch
   )
 

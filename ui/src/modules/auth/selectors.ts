@@ -1,10 +1,17 @@
 import { useSelector } from 'hooks'
+import { useMemo } from 'react'
 
 export const useAuth = () => {
-  return useSelector(state => state.auth)
+  const auth = useSelector(state => state.auth)
+  return useMemo(() => auth, [auth])
 }
 
 export const useToken = () => {
   const { token } = useAuth()
   return token
+}
+
+export const useHbServiceHost = () => {
+  const {host} = useAuth()
+  return host
 }

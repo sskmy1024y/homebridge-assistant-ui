@@ -6,18 +6,18 @@ import { ServiceNS } from 'models/services/namespace'
 import { ServiceType } from '@oznu/hap-client'
 import { WsService } from 'models/WsService'
 import { connect } from 'socket.io-client'
-import { environment } from 'env'
 import { setServiceResponse } from 'modules/service'
 import { setSocket } from '.'
 import { useDispatch } from 'hooks'
 import { useMemo } from 'react'
-import { useToken } from 'modules/auth'
+import { useHbServiceHost, useToken } from 'modules/auth'
 import { useWs } from './selectors'
 
 export const connectToNamespace = (
   namespace: ServiceNS,
   { namespaceConnectionCache }: Ws.State,
   token: string | null,
+  wsHostname: string | null,
   dispatch: Dispatch
 ) => {
   if (namespaceConnectionCache[namespace]) {
@@ -45,8 +45,8 @@ export const connectToNamespace = (
     }
 
     return io
-  } else if (token !== null) {
-    const io = establishConnectionToNamespace(namespace, token)
+  } else if (token !== null && wsHostname !== null) {
+    const io = establishConnectionToNamespace(namespace, token, wsHostname)
     io.connected = new Subject()
 
     // wait for the connection and broadcase when ready
@@ -73,7 +73,8 @@ export const useConnectToNamespace = (namespace: ServiceNS) => {
   const dispatch = useDispatch()
   const token = useToken()
   const ws = useWs()
-  return useMemo(() => connectToNamespace(namespace, ws, token, dispatch), [
+  const wsHostname = useHbServiceHost()
+  return useMemo(() => connectToNamespace(namespace, ws, token, wsHostname, dispatch), [
     dispatch,
     namespace,
     ws,
@@ -83,9 +84,10 @@ export const useConnectToNamespace = (namespace: ServiceNS) => {
 
 function establishConnectionToNamespace(
   namespace: ServiceNS,
-  token: string
+  token: string,
+  socketHostname: string
 ): WsService {
-  const socket = connect(`${environment.api.socket}/${namespace}`, {
+  const socket = connect(`${socketHostname}/${namespace}`, {
     query: {
       token
     }

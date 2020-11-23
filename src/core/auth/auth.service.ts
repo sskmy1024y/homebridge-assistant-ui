@@ -4,18 +4,22 @@ import { FastifyRequest } from 'fastify'
 
 @Injectable()
 export class AuthService {
-  private _hbServiceHostName: string
+  private _hbServiceHostname: string
   private _hbServiceToken: string
+
+  get hbServiceHostname() {
+    return this._hbServiceHostname
+  }
 
   public prepareHbServiceRequest(req: FastifyRequest, port: number) {
     const host = req.hostname.match(/(.*):\d{1,5}/i)?.[1] ?? req.hostname
-    this._hbServiceHostName = `${req.protocol}://${host}:${port}`
+    this._hbServiceHostname = `${req.protocol}://${host}:${port}`
   }
 
   public hbServiceAuth(username: string, password: string) {
-    if (!this._hbServiceHostName) return null
+    if (!this._hbServiceHostname) return null
 
-    const result = fetch(`${this._hbServiceHostName}/api/auth/login`, {
+    const result = fetch(`${this._hbServiceHostname}/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -35,9 +39,9 @@ export class AuthService {
   }
 
   public hbServiceGetUserId(username: string) {
-    if (!this._hbServiceHostName || !this._hbServiceToken) return null
+    if (!this._hbServiceHostname || !this._hbServiceToken) return null
 
-    const users = fetch(`${this._hbServiceHostName}/api/users`, {
+    const users = fetch(`${this._hbServiceHostname}/api/users`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

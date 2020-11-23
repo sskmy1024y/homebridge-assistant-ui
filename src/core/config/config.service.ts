@@ -162,7 +162,6 @@ export class ConfigService {
     return {
       version: this._assistantUIConfig.version,
       vrmPath,
-      hbServicePort: this.hbServicePort,
       assistantName: config.assistantName,
       camera: config.camera
     }

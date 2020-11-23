@@ -5,7 +5,7 @@ export interface AssistantConfigApiResponseDto {
   body: {
     version: string,
     vrmPath: string,
-    hbServicePort: number,
+    hbServiceHost: string,
     assistantName: string,
     camera: {
       position: {
@@ -23,8 +23,9 @@ export interface AssistantConfigApiResponseDto {
 }
 
 export async function fetchAssistantConfig(username: string, password: string) {
-  const response = await post<AssistantConfigApiResponseDto>('config', {
-    userId: "1"
+  const response = await post<AssistantConfigApiResponseDto>('auth/config', {
+    username,
+    password
   })
   return response.parsedBody?.body
 }
