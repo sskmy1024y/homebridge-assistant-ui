@@ -1,0 +1,25 @@
+name: CI-test
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    name: Test + Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.13.1'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test:e2e

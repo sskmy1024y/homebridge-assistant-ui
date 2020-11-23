@@ -1,0 +1,9 @@
+/node_modules
+/app/node_modules
+/packages/**/node_modules
+
+/coverage
+
+webpack.config.js
+
+Storyshots.test.js

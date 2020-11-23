@@ -1,0 +1,8 @@
+.DS_Store
+*node_modules
+*.log
+.npmrc
+.env
+
+*public/*.js
+*public/*.map

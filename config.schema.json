@@ -1,0 +1,17 @@
+{
+  "pluginAlias": "homebridge-assistant-ui",
+  "pluginType": "platform",
+  "singular": true,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "port": {
+        "title": "Port",
+        "type": "integer",
+        "default": 4200,
+        "maximum": 65535,
+        "required": true
+      }
+    }
+  }
+}

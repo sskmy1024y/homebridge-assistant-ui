@@ -14,10 +14,16 @@ describe('ConfigController (e2e)', () => {
   beforeAll(async () => {
     process.env.AUI_BASE_PATH = path.resolve(__dirname, '../../')
     process.env.AUI_STORAGE_PATH = path.resolve(__dirname, '../', '.homebridge')
+    process.env.HB_CONFIG_PATH = path.resolve(process.env.AUI_STORAGE_PATH, 'config.json')
     process.env.AUI_CONFIG_PATH = path.resolve(process.env.AUI_STORAGE_PATH, 'assistant', 'config.json')
 
     // setup test config
+    await fs.copy(path.resolve(__dirname, '../mocks', 'config.json'), process.env.HB_CONFIG_PATH)
     await fs.copy(path.resolve(__dirname, '../mocks', 'assistant', 'config.json'), process.env.AUI_CONFIG_PATH)
+    await fs.copy(
+      path.resolve(__dirname, '../mocks', 'assistant', 'avator.vrm'),
+      path.resolve(process.env.AUI_STORAGE_PATH, 'assistant', 'avator.vrm')
+    )
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [TypeOrmModule.forRoot(), ConfigModule]
@@ -40,10 +46,13 @@ describe('ConfigController (e2e)', () => {
       .ready()
   })
 
-  it('GET /config (before update assistantName)', async () => {
+  it('POST /config (before update assistantName)', async () => {
     const res = await app.inject({
-      method: 'GET',
-      path: '/config'
+      method: 'POST',
+      path: '/config',
+      payload: {
+        userId: '1'
+      }
     })
 
     expect(res.statusCode).toEqual(200)
@@ -56,7 +65,8 @@ describe('ConfigController (e2e)', () => {
       method: 'PUT',
       path: '/config',
       payload: {
-        assistantName: 'hanako'
+        assistantName: 'hanako',
+        userId: '1'
       }
     })
 
@@ -64,15 +74,41 @@ describe('ConfigController (e2e)', () => {
     expect(res.json().status).toEqual('ok')
   })
 
-  it('GET /config (after update assistantName)', async () => {
+  it('POST /config (after update assistantName)', async () => {
     const res = await app.inject({
-      method: 'GET',
-      path: '/config'
+      method: 'POST',
+      path: '/config',
+      payload: {
+        userId: '1'
+      }
     })
 
     expect(res.statusCode).toEqual(200)
     expect(res.json().status).toEqual('ok')
     expect(res.json().body.assistantName).toEqual('hanako')
+  })
+
+  it('POST /config (undefined userId)', async () => {
+    const res = await app.inject({
+      method: 'POST',
+      path: '/config',
+      payload: {
+        userId: '100'
+      }
+    })
+
+    expect(res.statusCode).toEqual(200)
+    expect(res.json().status).toEqual('ok')
+    expect(res.json().body.assistantName).toEqual('yui')
+  })
+
+  it('GET /config/vrm/1', async () => {
+    const res = await app.inject({
+      method: 'GET',
+      path: '/config/vrm/1'
+    })
+
+    expect(res.statusCode).toEqual(200)
   })
 
   afterAll(async () => {
