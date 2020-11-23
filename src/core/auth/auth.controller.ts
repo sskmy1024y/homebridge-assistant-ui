@@ -15,10 +15,16 @@ export class AuthController {
     @Req() req: FastifyRequest
   ) {
     const hbServicePort = this.configService.hbServicePort
-    const result = this.authService.hbServiceAuth({ req, username, password, port: hbServicePort })
+    this.authService.prepareHbServiceRequest(req, hbServicePort)
+    this.authService.hbServiceAuth(username, password)
+    const userId = this.authService.hbServiceGetUserId(username)
+    if (userId) {
+      this.configService.setRequestUserId(userId)
+      const config = this.configService.uiSettings(req)
 
-    // this.configService.setRequestUserId(body.userId)
-    // const config = this.configService.uiSettings(req)
-    return { status: 'ok', body: result as any }
+      return { status: 'ok', body: config as any }
+    } else {
+      return { status: 'error', message: 'Error in hb-service request' }
+    }
   }
 }
