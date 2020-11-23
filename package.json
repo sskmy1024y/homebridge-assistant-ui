@@ -19,7 +19,7 @@
     "start:prod": "node dist/main",
     "build": "npm run build:ui && npm run build:server",
     "build:ui": "npm run build --prefix ui",
-    "build:server": "rimraf dist && nest build",
+    "build:server": "rimraf dist && nest build --path ./tsconfig.build.json",
     "lint": "npm run lint:server && npm run lint:ui",
     "lint:server": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "lint:ui": "npm run lint --prefix ui",
