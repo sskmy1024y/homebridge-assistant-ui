@@ -58,6 +58,7 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^4.1.2",
     "eslint-plugin-sort-imports-es6-autofix": "^0.5.0",
+    "interactjs": "^1.10.1",
     "jest": "^25.1.0",
     "jest-resolve": "^25.1.0",
     "jest-snapshot": "^25.1.0",

@@ -1,33 +1,56 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 
 import { Colors, device } from 'theme'
+import { updateLayout } from 'modules/layout/operations'
+import { useDispatch, useInteractJS } from 'hooks'
+import { useLayout } from 'modules/layout/selector'
 import styled from 'styled-components'
 import theme from 'theme/default'
 
 interface Props {
+  uuid: string
   deviceName: string
   icon: React.ReactElement
   children: React.ReactNode
+  minWidth?: number
+  minHeight?: number
   style?: React.CSSProperties
 }
 
 export default function BaseWindow({
+  uuid,
   deviceName,
   icon,
   children,
+  minWidth = 480,
+  minHeight = 230,
   style
 }: Props) {
-  const [positionX, setPositionX] = useState(0)
-  const [positionY, setPositionY] = useState(0)
-  const [scale, setScale] = useState(1)
-
-  const onDrag = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    setPositionX(event.clientX)
-    setPositionY(event.clientY)
-  }, [])
+  const dispatch = useDispatch()
+  const initialLayout = useLayout(uuid) ?? {
+    width: minWidth,
+    height: minHeight,
+    x: 0,
+    y: 0
+  }
+  const onChanged = useCallback(
+    (position: { width: number; height: number; x: number; y: number }) => {
+      dispatch(updateLayout({ accessoryUUID: uuid, ...position }))
+    },
+    [uuid, dispatch]
+  )
+  const { ref, interactStyle } = useInteractJS<HTMLDivElement>(
+    uuid,
+    initialLayout,
+    onChanged
+  )
 
   return (
-    <WindowContainer draggable={true} onDragEnd={onDrag} style={{top: `${positionX}px`, left: `${positionY}px`, transform: `scale(${scale})`, ...style}}>
+    <WindowContainer
+      ref={ref}
+      draggable
+      style={{ ...interactStyle, minWidth, minHeight, ...style }}
+    >
       <DeviceName>{deviceName}</DeviceName>
       <Row>
         <IconContainer>{icon}</IconContainer>
@@ -39,12 +62,12 @@ export default function BaseWindow({
 
 const WindowContainer = styled.div`
   position: absolute;
-  width: 480px;
-  height: 230px;
   background: ${theme.background.window.main};
   border: 1px solid ${theme.ui.border.main};
   padding: 10px 16px;
   transform-origin: top left;
+  box-sizing: border-box;
+  touch-action: none;
 
   @media ${device.tablet} {
     transform: scale(0.5);

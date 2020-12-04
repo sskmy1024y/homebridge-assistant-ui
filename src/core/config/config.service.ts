@@ -120,7 +120,7 @@ export class ConfigService {
   }
 
   /**
-   * Loads the config from the config.json
+   * Loads the config from the config.json (homebridge config)
    */
   public parseConfig(homebridgeConfig) {
     this.homebridgeConfig = homebridgeConfig
