@@ -3,6 +3,7 @@ import React, { useCallback } from 'react'
 import { Colors, device } from 'theme'
 import { updateLayout } from 'modules/layout/operations'
 import { useDispatch, useInteractJS } from 'hooks'
+import { useHbServiceUserId } from 'modules/auth'
 import { useLayout } from 'modules/layout/selector'
 import styled from 'styled-components'
 import theme from 'theme/default'
@@ -27,23 +28,25 @@ export default function BaseWindow({
   style
 }: Props) {
   const dispatch = useDispatch()
-  const initialLayout = useLayout(uuid) ?? {
-    width: minWidth,
-    height: minHeight,
-    x: 0,
-    y: 0
-  }
+  const userId = useHbServiceUserId()
+  const initialLayout = useLayout(uuid)
+
   const onChanged = useCallback(
     (position: { width: number; height: number; x: number; y: number }) => {
-      dispatch(updateLayout({ accessoryUUID: uuid, ...position }))
+      if (userId) {
+        dispatch(updateLayout({ userId, accessoryUUID: uuid, ...position }))
+      }
     },
-    [uuid, dispatch]
+    [userId, dispatch, uuid]
   )
   const { ref, interactStyle } = useInteractJS<HTMLDivElement>(
-    uuid,
     initialLayout,
     onChanged
   )
+
+  if (!initialLayout) {
+    return null
+  }
 
   return (
     <WindowContainer

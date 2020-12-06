@@ -1,6 +1,6 @@
 import Accessories from 'components/Accessories'
 
-import { DebugTool } from 'components/DebugTools'
+// import { DebugTool } from 'components/DebugTools'
 import InterfaceLayer from 'components/InterfaceLayer'
 import React from 'react'
 import VRMViewer from 'components/VRMViewer'
@@ -11,13 +11,11 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <VRMViewer
-        floorSrc={'./assets/textures/floor-texture.jpg'}
-      />
+      <VRMViewer floorSrc={'./assets/textures/floor-texture.jpg'} />
       <UIViewer>
         <Accessories />
         <InterfaceLayer />
-        <DebugTool />
+        {/* <DebugTool /> */}
       </UIViewer>
     </>
   )

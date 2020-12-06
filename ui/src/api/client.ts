@@ -68,6 +68,7 @@ export async function put<T>(
 ): Promise<HttpResponse<T>> {
   return await http<T>(
     new Request(`${host || environment.api.base}/${path}`, {
+      headers,
       method: HttpMethods.Put,
       body: JSON.stringify(body) ?? {}
     })

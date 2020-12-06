@@ -22,7 +22,10 @@ export class AuthController {
       this.configService.setRequestUserId(userId)
       const config = this.configService.uiSettings(req)
 
-      return { status: 'ok', body: { ...config, hbServiceHost: this.authService.hbServiceHostname } as any }
+      return {
+        status: 'ok',
+        body: { ...config, hbServiceHost: this.authService.hbServiceHostname, hbServiceUserId: userId } as any
+      }
     } else {
       return { status: 'error', message: 'Error in hb-service request' }
     }

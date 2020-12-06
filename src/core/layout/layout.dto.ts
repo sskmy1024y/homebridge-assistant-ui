@@ -1,19 +1,19 @@
-import { IsDefined, IsNumber } from 'class-validator'
+import { IsNotEmpty, IsNumber } from 'class-validator'
 
 export class LayoutDto {
   @IsNumber()
-  @IsDefined()
+  @IsNotEmpty()
   width: number
 
   @IsNumber()
-  @IsDefined()
+  @IsNotEmpty()
   height: number
 
   @IsNumber()
-  @IsDefined()
+  @IsNotEmpty()
   x: number
 
   @IsNumber()
-  @IsDefined()
+  @IsNotEmpty()
   y: number
 }

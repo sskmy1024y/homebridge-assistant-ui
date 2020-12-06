@@ -13,7 +13,11 @@ export const getAuthToken = (
   payload: GetAuthTokenPayload
 ): ThunkActionType => async (dispatch: Dispatch<Action>) => {
   try {
-    const authResponse = await fetchAuthToken(payload.usename, payload.password, payload.hbServiceHost)
+    const authResponse = await fetchAuthToken(
+      payload.usename,
+      payload.password,
+      payload.hbServiceHost
+    )
     if (authResponse) {
       dispatch(
         setAuthToken({

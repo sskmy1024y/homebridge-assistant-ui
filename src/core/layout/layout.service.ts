@@ -55,6 +55,8 @@ export class LayoutService {
       this._layouts[userId] = {}
     }
 
+    console.log(width)
+
     const updateLayout = {
       width,
       height,
@@ -69,7 +71,6 @@ export class LayoutService {
   }
 
   public getLayouts(userId) {
-    console.log(this._layouts)
     const userLayouts = this._layouts[userId]
 
     return userLayouts ?? {}

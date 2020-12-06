@@ -18,6 +18,13 @@ export class LayoutController {
     @Param('accessoryUUID') accessoryUUID: string,
     @Body() body: LayoutDto
   ) {
-    return this.service.updateLayout({ userId, accessoryUUID, ...body })
+    return this.service.updateLayout({
+      userId,
+      accessoryUUID,
+      width: body.width,
+      height: body.height,
+      x: body.x,
+      y: body.y
+    })
   }
 }

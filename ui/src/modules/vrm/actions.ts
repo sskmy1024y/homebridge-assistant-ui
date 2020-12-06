@@ -16,13 +16,13 @@ interface SetVRMConfigPayload {
   vrmPath: string
   camera: {
     position: {
-      x: number,
-      y: number,
+      x: number
+      y: number
       z: number
-    },
+    }
     target: {
-      x: number,
-      y: number,
+      x: number
+      y: number
       z: number
     }
   }
@@ -33,7 +33,10 @@ export type InitAssistantAction = TypedAction<
   InitAssistantPayload
 >
 
-export type SetVRMConfigAction = TypedAction<ActionNames.SetVRMConfig, SetVRMConfigPayload>
+export type SetVRMConfigAction = TypedAction<
+  ActionNames.SetVRMConfig,
+  SetVRMConfigPayload
+>
 
 export function initMotionManager(
   payload: InitAssistantPayload

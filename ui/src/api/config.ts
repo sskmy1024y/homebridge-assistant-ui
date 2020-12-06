@@ -1,21 +1,22 @@
 import { post } from 'api/client'
 
 export interface AssistantConfigApiResponseDto {
-  status: 'ok' | 'error',
+  status: 'ok' | 'error'
   body: {
-    version: string,
-    vrmPath: string,
-    hbServiceHost: string,
-    assistantName: string,
+    version: string
+    vrmPath: string
+    hbServiceUserId: string
+    hbServiceHost: string
+    assistantName: string
     camera: {
       position: {
-        x: number,
-        y: number,
+        x: number
+        y: number
         z: number
-      },
+      }
       target: {
-        x: number,
-        y: number,
+        x: number
+        y: number
         z: number
       }
     }

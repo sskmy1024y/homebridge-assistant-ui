@@ -25,7 +25,6 @@ export type InitInteractPosition = typeof initInteractPosition
  * @param position HTML要素の初期座標と大きさ、指定されない場合はinitPositionで指定された値になる
  */
 export function useInteractJS<T extends Interact.Target>(
-  uuid: string,
   position: Partial<typeof initInteractPosition> = initInteractPosition,
   onChanged?: (position: typeof initInteractPosition) => void
 ) {

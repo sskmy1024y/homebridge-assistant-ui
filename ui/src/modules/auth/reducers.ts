@@ -9,10 +9,11 @@ export function reducer(state: State = initialState, action: Action): State {
         expire: action.payload.expire
       }
     }
-    case ActionNames.SetHbServiceHost: {
+    case ActionNames.SetHBServiceConfig: {
       return {
         ...state,
-        host: action.payload.host
+        host: action.payload.host,
+        userId: action.payload.userId
       }
     }
     default:
