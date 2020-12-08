@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Ws from 'modules/ws'
 import { Dispatch } from 'redux'
 import { Observable, Subject } from 'rxjs'
@@ -9,8 +10,8 @@ import { connect } from 'socket.io-client'
 import { setServiceResponse } from 'modules/service'
 import { setSocket } from '.'
 import { useDispatch } from 'hooks'
-import { useMemo } from 'react'
 import { useHbServiceHost, useToken } from 'modules/auth'
+import { useMemo } from 'react'
 import { useWs } from './selectors'
 
 export const connectToNamespace = (
@@ -74,12 +75,10 @@ export const useConnectToNamespace = (namespace: ServiceNS) => {
   const token = useToken()
   const ws = useWs()
   const wsHostname = useHbServiceHost()
-  return useMemo(() => connectToNamespace(namespace, ws, token, wsHostname, dispatch), [
-    dispatch,
-    namespace,
-    ws,
-    token
-  ])
+  return useMemo(
+    () => connectToNamespace(namespace, ws, token, wsHostname, dispatch),
+    [namespace, ws, token, wsHostname, dispatch]
+  )
 }
 
 function establishConnectionToNamespace(

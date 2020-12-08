@@ -9,7 +9,7 @@
     "build": "NODE_ENV='production' webpack",
     "watch": "webpack -w --config webpack.config.js",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "prettier": "prettier --check './src/**/*.{ts,tsx,js,jsx}'",
+    "prettier": "prettier --check 'src/**/*.{ts,tsx,js,jsx}'",
     "prettier:fix": "npm run prettier --write",
     "eslint": "eslint --ext .ts,.tsx,.js,.jsx,.mjs ./src/",
     "eslint:fix": "npm run eslint --fix",

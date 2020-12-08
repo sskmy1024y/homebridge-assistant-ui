@@ -1,6 +1,3 @@
-import { Accessory } from 'models/accessories/Accessory'
-import { ServiceNS } from 'models/services/namespace'
-
 export * from './actions'
 export * from './reducers'
 

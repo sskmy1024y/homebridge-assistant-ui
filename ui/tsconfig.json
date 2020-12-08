@@ -24,11 +24,13 @@
     "strictNullChecks": true,
   },
   "exclude": [
+    "public",
     "node_modules",
     "**/*.spec.ts",
     "**/*.spec.tsx",
     "**/*.test.ts",
-    "**/*.test.tsx"
+    "**/*.test.tsx",
+    "**/*.config.js"
   ],
   "include": [
     "**/*.ts",

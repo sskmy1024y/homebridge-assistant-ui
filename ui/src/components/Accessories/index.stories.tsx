@@ -55,7 +55,7 @@ stories.add('BaseWindow', () => {
   })
 
   return (
-    <BaseWindow uuid={""} deviceName={deviceName} icon={icon}>
+    <BaseWindow uuid={''} deviceName={deviceName} icon={icon}>
       <PowerBtnWrapper style={props}>
         <PowerButton
           size={168}

@@ -55,8 +55,6 @@ export class LayoutService {
       this._layouts[userId] = {}
     }
 
-    console.log(width)
-
     const updateLayout = {
       width,
       height,

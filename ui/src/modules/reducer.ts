@@ -1,9 +1,9 @@
 import * as Auth from './auth'
+import * as Layout from './layout'
 import * as Messages from './messages'
 import * as Service from './service'
 import * as VRM from './vrm'
 import * as Ws from './ws'
-import * as Layout from './layout'
 import * as redux from 'redux'
 
 export interface RootState {
