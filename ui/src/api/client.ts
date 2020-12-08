@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { environment } from 'env'
 
 enum HttpMethods {
@@ -45,7 +46,6 @@ export async function get<T>(
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function post<T>(
   path: string,
   body?: any,
@@ -60,7 +60,6 @@ export async function post<T>(
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function put<T>(
   path: string,
   body: any,
@@ -68,6 +67,7 @@ export async function put<T>(
 ): Promise<HttpResponse<T>> {
   return await http<T>(
     new Request(`${host || environment.api.base}/${path}`, {
+      headers,
       method: HttpMethods.Put,
       body: JSON.stringify(body) ?? {}
     })

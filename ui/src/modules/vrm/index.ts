@@ -9,8 +9,8 @@ export interface State {
   vrmPath: string
   assistant: Assistant | null
   camera: {
-    position: Vector3,
-    target: Vector3 
+    position: Vector3
+    target: Vector3
   }
 }
 

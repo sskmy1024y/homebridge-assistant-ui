@@ -1,12 +1,11 @@
 import React from 'react'
 
-import { Vector3 } from 'three'
-import { useEffect, useSelector, useState } from 'hooks'
+import { useSelector } from 'hooks'
+import { useVRMPath } from 'modules/vrm'
 import Controller from 'utils/Controller'
 import Floor from 'components/Floor'
 import VRMCanvas from 'components/VRMCanvas'
 import styled from 'styled-components'
-import { useVRMPath } from 'modules/vrm'
 
 interface Props {
   floorSrc?: string

@@ -59,7 +59,14 @@ const SwitchWindow = React.memo(({ accessory, style }: Props) => {
   }
 
   return (
-    <BaseWindow deviceName={accessory.serviceName} icon={icon} style={style}>
+    <BaseWindow
+      uuid={accessory.uuid}
+      deviceName={accessory.serviceName}
+      icon={icon}
+      minWidth={420}
+      minHeight={230}
+      style={style}
+    >
       <PowerBtnWrapper style={springStyle}>
         <PowerButton size={168} active={active} onClick={handleClick} />
       </PowerBtnWrapper>

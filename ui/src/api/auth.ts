@@ -6,10 +6,18 @@ export interface AuthApiResponceDto {
   token_type: 'Bearer'
 }
 
-export async function fetchAuthToken(username: string, password: string, host: string) {
-  const response = await post<AuthApiResponceDto>('auth/login', {
-    username,
-    password
-  }, `${host}/api`)
+export async function fetchAuthToken(
+  username: string,
+  password: string,
+  host: string
+) {
+  const response = await post<AuthApiResponceDto>(
+    'auth/login',
+    {
+      username,
+      password
+    },
+    `${host}/api`
+  )
   return response.parsedBody
 }

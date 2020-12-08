@@ -43,7 +43,7 @@ const LightWindow = ({ style }: Props) => {
   )
 
   return (
-    <BaseWindow deviceName={'light'} icon={icon} style={style}>
+    <BaseWindow uuid={''} deviceName={'light'} icon={icon} style={style}>
       <PowerBtnWrapper style={springStyle}>
         <PowerButton
           size={168}

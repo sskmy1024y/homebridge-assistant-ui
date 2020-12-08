@@ -1,9 +1,9 @@
 'use strict'
 
-const path = require('path')
+import { join } from 'path'
 
 // eslint-disable-next-line no-undef
-const rootDir = path.join(__dirname, 'src')
+const rootDir = join(__dirname, 'src')
 
 const config = {
   globals: {
@@ -25,7 +25,8 @@ const config = {
   testPathIgnorePatterns: ['/node_modules/'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   moduleNameMapper: {
-    '@(components|helper|redux|config|modules|style)?/(.*)': '<rootDir>/src/$1/$2',
+    '@(components|helper|redux|config|modules|style)?/(.*)':
+      '<rootDir>/src/$1/$2',
     '\\.(css|less|scss|sss|styl)$': '<rootDir>/node_modules/jest-css-modules'
   },
   modulePaths: ['<rootDir>'],
@@ -44,4 +45,4 @@ const config = {
 config.globals.__STORYBOOK__ = false
 
 // eslint-disable-next-line no-undef
-module.exports = config
+export default config

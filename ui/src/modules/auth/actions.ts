@@ -2,18 +2,19 @@ import { TypedAction } from 'utils/redux'
 
 export enum ActionNames {
   SetAuthToken = 'SET_AUTH_TOKEN',
-  SetHbServiceHost = 'SET_HB_SERVICE_HOST'
+  SetHBServiceConfig = 'SET_HB_SERVICE_CONFIG'
 }
 
-export type Action = SetAuthTokenAction | SetHbServicePortAction
+export type Action = SetAuthTokenAction | SetHBServiceConfigAction
 
 interface SetAuthTokenPayload {
   token: string
   expire: number
 }
 
-interface SetHbServicePortPayload {
+interface SetHBServiceConfigPayload {
   host: string
+  userId: string
 }
 
 export type SetAuthTokenAction = TypedAction<
@@ -21,7 +22,10 @@ export type SetAuthTokenAction = TypedAction<
   SetAuthTokenPayload
 >
 
-export type SetHbServicePortAction = TypedAction<ActionNames.SetHbServiceHost, SetHbServicePortPayload>
+export type SetHBServiceConfigAction = TypedAction<
+  ActionNames.SetHBServiceConfig,
+  SetHBServiceConfigPayload
+>
 
 export function setAuthToken(payload: SetAuthTokenPayload): SetAuthTokenAction {
   return {
@@ -30,9 +34,11 @@ export function setAuthToken(payload: SetAuthTokenPayload): SetAuthTokenAction {
   }
 }
 
-export function setHbServiceHost(payload: SetHbServicePortPayload): SetHbServicePortAction {
+export function setHbServiceConfig(
+  payload: SetHBServiceConfigPayload
+): SetHBServiceConfigAction {
   return {
-    type: ActionNames.SetHbServiceHost,
+    type: ActionNames.SetHBServiceConfig,
     payload
   }
 }

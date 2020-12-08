@@ -49,9 +49,8 @@ export class ConfigService {
 
   public isProduction = process.env.NODE_ENV === 'production'
   public storagePath =
-    process.env.AUI_STORAGE_PATH || this.isProduction
-      ? path.resolve(os.homedir(), '.homebridge')
-      : path.resolve(process.env.AUI_BASE_PATH, './data')
+    process.env.AUI_STORAGE_PATH ||
+    (this.isProduction ? path.resolve(os.homedir(), '.homebridge') : path.resolve(process.env.AUI_BASE_PATH, './data'))
   public configPath = process.env.HB_CONFIG_PATH || path.resolve(this.storagePath, 'config.json')
   public assistantUiConfigPath =
     process.env.AUI_CONFIG_PATH || path.resolve(this.storagePath, 'assistant', 'config.json')
@@ -120,7 +119,7 @@ export class ConfigService {
   }
 
   /**
-   * Loads the config from the config.json
+   * Loads the config from the config.json (homebridge config)
    */
   public parseConfig(homebridgeConfig) {
     this.homebridgeConfig = homebridgeConfig
