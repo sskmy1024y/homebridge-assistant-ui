@@ -11,6 +11,7 @@ import { getVRMConfig } from 'modules/vrm/operations'
 import { initWsServiceEvent, useConnectToNamespace } from 'modules/ws'
 import { useAccessories } from 'modules/service/selector'
 import { useDispatch, useEffect, useMemo } from 'hooks'
+import ClockWindow from './ClockWindow'
 import React from 'react'
 import SwitchWindow from './SwitchWindow'
 
@@ -70,7 +71,12 @@ const Accessories = () => {
     [accessories]
   )
 
-  return <>{accessoryList}</>
+  return (
+    <>
+      {accessoryList}
+      <ClockWindow />
+    </>
+  )
 }
 
 export default Accessories

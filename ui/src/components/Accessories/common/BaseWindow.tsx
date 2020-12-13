@@ -10,9 +10,9 @@ import theme from 'theme/default'
 
 interface Props {
   uuid: string
-  deviceName: string
-  icon: React.ReactElement
   children: React.ReactNode
+  deviceName?: string
+  icon?: React.ReactElement
   minWidth?: number
   minHeight?: number
   style?: React.CSSProperties
@@ -54,9 +54,9 @@ export default function BaseWindow({
       draggable
       style={{ ...interactStyle, minWidth, minHeight, ...style }}
     >
-      <DeviceName>{deviceName}</DeviceName>
+      {deviceName && <DeviceName>{deviceName}</DeviceName>}
       <Row>
-        <IconContainer>{icon}</IconContainer>
+        {icon && <IconContainer>{icon}</IconContainer>}
         <MainContainer>{children}</MainContainer>
       </Row>
     </WindowContainer>

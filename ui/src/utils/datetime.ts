@@ -11,3 +11,7 @@
 export const isBetweenHour = (target: Date, from: number, to: number) => {
   return from <= target.getHours() && target.getHours() <= to
 }
+
+export const format2Digit = (number: number) => {
+  return `0${number}`.slice(-2)
+}
