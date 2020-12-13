@@ -1,15 +1,15 @@
 import { Accessory } from 'models/accessories/Accessory'
-import { Dispatch } from 'redux'
 import { HomeKitTypes } from 'models/accessories/HomeKitTypes'
 import { ServiceEvent } from 'models/services'
 import { WsService } from 'models/WsService'
 
 import { AnimationPreset } from 'utils/MotionManager/presets/animation'
+import { Dispatch } from 'modules/reducer'
 import { ErrorType, OperationType } from './type'
 import { MotionManager } from 'utils/MotionManager'
-import { addMessage } from 'modules/messages'
 import { getErrorMessageVO } from './error'
 import { getReplyMessageVO } from './reply'
+import { sendAssistantMessage } from 'modules/messages'
 
 const TIMEOUT_OFFSET = 1500
 
@@ -33,7 +33,7 @@ export const runOperation = (
   const timeout = setTimeout(() => {
     const messageVO = getErrorMessageVO(ErrorType.OperationTimeoutError)
     motionManager?.animate(AnimationPreset.Think)
-    dispatch(addMessage({ messageVO }))
+    dispatch(sendAssistantMessage({ messageVO }))
   }, TIMEOUT_OFFSET)
 
   // Calculate the time from the time of the event to the timeout
@@ -45,7 +45,7 @@ export const runOperation = (
       const messageVO = getReplyMessageVO(operationType, accessory.serviceName)
 
       motionManager?.animate(AnimationPreset.Salute)
-      dispatch(addMessage({ messageVO }))
+      dispatch(sendAssistantMessage({ messageVO }))
       clearTimeout(timeout)
     }
   }

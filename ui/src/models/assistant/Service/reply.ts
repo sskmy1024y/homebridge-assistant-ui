@@ -1,8 +1,9 @@
 import { OperationType, ReplyMapType } from './type'
-import { interpolate, toMessageVO } from '../utils'
+import { getUserLang, interpolate, toMessageVO } from '../utils'
 
 type LocaleReplyMapType = {
   ja: ReplyMapType
+  en: ReplyMapType
 }
 
 const entityMap: LocaleReplyMapType = {
@@ -14,8 +15,20 @@ const entityMap: LocaleReplyMapType = {
     ],
     [OperationType.TurnOn]: [
       '{{ DEVICE_NAME }}をつけました',
-      '了解です',
+      '了解しました！',
       '了解です'
+    ]
+  },
+  en: {
+    [OperationType.TurnOff]: [
+      'I turned off the {{ DEVICE_NAME }}',
+      'OK!',
+      'I did it'
+    ],
+    [OperationType.TurnOn]: [
+      'I turned on the {{ DEVICE_NAME }}',
+      'OK!',
+      'I did it'
     ]
   }
 }
@@ -24,7 +37,8 @@ export const getReplyMessageVO = (
   operationType: OperationType,
   deviceName: string
 ) => {
-  const replyMessageMap = entityMap.ja
+  const lang = getUserLang()
+  const replyMessageMap = entityMap[lang]
   const messageMap = replyMessageMap[operationType]
 
   const randomIndex = Math.floor(Math.random() * messageMap.length)

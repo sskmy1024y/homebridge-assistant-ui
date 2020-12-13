@@ -3,7 +3,7 @@
   "version": "0.0.1-alpha.1",
   "description": "Provides a home appliance operation assistant using a 3D avatar and a log collection function like PDS.",
   "author": "sho <sskmy1024.y@gmail.com>",
-  "private": true,
+  "private": false,
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -25,7 +25,8 @@
     "lint:ui": "npm run lint --prefix ui",
     "test:e2e": "NODE_ENV=test jest --forceExit --detectOpenHandles --verbose=true --silent --config ./test/jest-e2e.json",
     "install:ui": "npm install --prefix ui",
-    "migrate": "typeorm migration:run"
+    "migrate": "typeorm migration:run",
+    "prepublish": "npm run build"
   },
   "bin": {
     "homebridge-assistant-ui": "./dist/bin/start.js"

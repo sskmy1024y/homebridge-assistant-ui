@@ -1,19 +1,26 @@
 import { ErrorMapType, ErrorType } from './type'
-import { interpolate, toMessageVO } from '../utils'
+import { getUserLang, interpolate, toMessageVO } from '../utils'
 
 type LocaleErrorMapType = {
   ja: ErrorMapType
+  en: ErrorMapType
 }
 
 const errorMap: LocaleErrorMapType = {
   ja: {
-    [ErrorType.UnknownError]: ['すみません、よくわかりません']
+    [ErrorType.UnknownError]: [
+      'すみません、よくわかりません',
+      '別の言葉で言い直してください'
+    ]
+  },
+  en: {
+    [ErrorType.UnknownError]: ['Sorry, I cannot understand.']
   }
 }
 
 const getLocaleErrorMap = () => {
-  // TODO: Change the entities returned by language
-  return errorMap.ja
+  const language = getUserLang()
+  return errorMap[language]
 }
 
 export const getErrorMessageVO = (

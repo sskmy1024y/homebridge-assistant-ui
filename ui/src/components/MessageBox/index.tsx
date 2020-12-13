@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { device } from 'theme'
-import { sendMessage } from 'modules/messages'
+import { sendUserMessage } from 'modules/messages'
 import { useDispatch } from 'hooks'
 import { useMessages } from 'modules/messages/selector'
 import MessageBubble, { Direction } from './MessageBubble'
@@ -30,7 +30,7 @@ export default function MessageBox() {
 
   const onSubmit = useCallback(
     (message: string) => {
-      dispatch(sendMessage({ message }))
+      dispatch(sendUserMessage({ message }))
     },
     [dispatch]
   )

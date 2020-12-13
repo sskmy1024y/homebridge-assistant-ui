@@ -26,3 +26,14 @@ export const interpolate = (
     )
     .join('')
 }
+
+// TODO: Allows the user to set it arbitrarily
+export const getUserLang = () => {
+  const language =
+    (window.navigator.languages && window.navigator.languages[0]) ||
+    window.navigator.language
+
+  // HOPE: I want to increase the supported languages
+  return language === 'ja' ? 'ja' : 'en'
+}
+export type SupportLang = ReturnType<typeof getUserLang>
