@@ -3,6 +3,7 @@ import { interpolate, toMessageVO } from '../utils'
 
 type LocaleReplyMapType = {
   ja: ReplyMapType
+  en: ReplyMapType
 }
 
 const entityMap: LocaleReplyMapType = {
@@ -16,6 +17,18 @@ const entityMap: LocaleReplyMapType = {
       '{{ DEVICE_NAME }}をつけました',
       '了解です',
       '了解です'
+    ]
+  },
+  en: {
+    [OperationType.TurnOff]: [
+      'I turned off the {{ DEVICE_NAME }}',
+      'OK!',
+      'I did it'
+    ],
+    [OperationType.TurnOn]: [
+      'I turned on the {{ DEVICE_NAME }}',
+      'OK!',
+      'I did it'
     ]
   }
 }

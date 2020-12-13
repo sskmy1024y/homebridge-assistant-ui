@@ -5,6 +5,7 @@ import * as Service from './service'
 import * as VRM from './vrm'
 import * as Ws from './ws'
 import * as redux from 'redux'
+import { ThunkDispatch } from 'redux-thunk'
 
 export interface RootState {
   auth: Auth.State
@@ -23,6 +24,8 @@ export const initialState: RootState = {
   service: Service.initialState,
   messages: Messages.initialState
 }
+
+export type Dispatch = ThunkDispatch<RootState, never, redux.AnyAction>
 
 export const rootReducer = redux.combineReducers<RootState>({
   auth: Auth.reducer,

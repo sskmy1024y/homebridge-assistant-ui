@@ -1,14 +1,11 @@
-import { Dispatch } from 'redux'
-import { RootState } from 'modules/reducer'
-import { ServiceNS } from 'models/services'
-import { connectToNamespace } from 'modules/ws'
+import { Dispatch, RootState } from 'modules/reducer'
 
 import { AnimationPreset } from 'utils/MotionManager/presets/animation'
 import { ErrorType, OperationType } from './type'
-import { addMessage } from 'modules/messages'
 import { getEntityMap } from './entity'
 import { getErrorMessageVO } from './error'
 import { runOperation } from './operation'
+import { sendAssistantMessage } from 'modules/messages'
 
 interface FindOperationState {
   findEntity: string
@@ -19,7 +16,7 @@ const findOperationByEntity = (sentence: string) => {
   const entityMap = getEntityMap()
   for (const [operationType, entities] of Object.entries(entityMap)) {
     for (const entity of entities) {
-      if (sentence.indexOf(entity) !== -1) {
+      if (sentence.toLowerCase().indexOf(entity) !== -1) {
         return {
           findEntity: entity,
           operationType
@@ -49,25 +46,13 @@ export const run = (
   if (findOperation === undefined) return false
 
   const { operationType } = findOperation
-  const wsService = connectToNamespace(
-    ServiceNS.Accessories,
-    rootState.ws,
-    rootState.auth.token,
-    rootState.auth.host,
-    dispatch
-  )
-
-  if (wsService === null || wsService.connected === undefined) {
-    return true
-  }
-
   const motionManager = rootState.vrm.assistant?.motionManager
   const result = runOperation(operationType, motionManager, dispatch)
 
   if (!result) {
     const messageVO = getErrorMessageVO(ErrorType.UnknownError)
     motionManager?.animate(AnimationPreset.Think)
-    dispatch(addMessage({ messageVO }))
+    dispatch(sendAssistantMessage({ messageVO }))
   }
   return true
 }

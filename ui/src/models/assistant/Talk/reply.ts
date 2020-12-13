@@ -1,21 +1,27 @@
 import { OperationType, ReplyMapType } from './type'
+import { SupportLang, getUserLang, toMessageVO } from '../utils'
 import { isBetweenHour } from 'utils/datetime'
-import { toMessageVO } from '../utils'
 
 type LocaleReplyMapType = {
   ja: ReplyMapType
+  en: ReplyMapType
 }
 
 const entityMap: LocaleReplyMapType = {
   ja: {
     [OperationType.Greeting]: [],
     [OperationType.Hungry]: ['私もお腹空きました']
+  },
+  en: {
+    [OperationType.Greeting]: [],
+    [OperationType.Hungry]: ["I'm hungry too."]
   }
 }
 
 export const getReplyMessageVO = (operationType: OperationType) => {
+  const lang = getUserLang()
   if (operationType === OperationType.Greeting) {
-    const message = getReplyGreeting('ja')
+    const message = getReplyGreeting(lang)
     return toMessageVO(message)
   }
 
@@ -33,19 +39,27 @@ const localeReplyGreeting = {
     Afternoon: ['こんにちは'],
     Evening: ['こんばんは'],
     Night: ['おやすみなさい']
+  },
+  en: {
+    Morning: ['Good morning!!', "How's it going"],
+    Afternoon: ['Hello', 'Hi!', 'Good afternoon'],
+    Evening: ['Good evening'],
+    Night: ['Good night']
   }
 }
 
-const getReplyGreeting = (lang: 'ja') => {
+const getReplyGreeting = (lang: SupportLang) => {
   const replyGreetings = localeReplyGreeting[lang]
   const date = new Date()
-  if (isBetweenHour(date, 0, 5) || isBetweenHour(date, 18, 24)) {
-    const candidates = replyGreetings.Night
-    const randomIndex = Math.floor(Math.random() * candidates.length)
-    return candidates[randomIndex]
-  } else {
-    const candidates = replyGreetings.Morning
-    const randomIndex = Math.floor(Math.random() * candidates.length)
-    return candidates[randomIndex]
-  }
+  const candidates =
+    isBetweenHour(date, 0, 5) || isBetweenHour(date, 22, 24)
+      ? replyGreetings.Night
+      : isBetweenHour(date, 5, 10)
+      ? replyGreetings.Morning
+      : isBetweenHour(date, 18, 22)
+      ? replyGreetings.Evening
+      : replyGreetings.Afternoon
+
+  const randomIndex = Math.floor(Math.random() * candidates.length)
+  return candidates[randomIndex]
 }

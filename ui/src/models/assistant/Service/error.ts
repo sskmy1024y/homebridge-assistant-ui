@@ -1,8 +1,9 @@
 import { ErrorMapType, ErrorType } from './type'
-import { interpolate, toMessageVO } from '../utils'
+import { getUserLang, interpolate, toMessageVO } from '../utils'
 
 type LocaleErrorMapType = {
   ja: ErrorMapType
+  en: ErrorMapType
 }
 
 const errorMap: LocaleErrorMapType = {
@@ -24,12 +25,31 @@ const errorMap: LocaleErrorMapType = {
       'しばらくしてから、もう一度お試しください'
     ],
     [ErrorType.UnknownError]: ['']
+  },
+  en: {
+    [ErrorType.AccessoryNotFoundError]: [
+      'Device not found,',
+      'The device with the specified name was not found'
+    ],
+    [ErrorType.OperationNotFoundError]: [
+      "I didn't understand the specified operation method",
+      "I'm sorry, I can't do that"
+    ],
+    [ErrorType.WsConnectionError]: [
+      'Homebridge connection failed',
+      'Network error has occurred'
+    ],
+    [ErrorType.OperationTimeoutError]: [
+      'The device did not respond',
+      'しばらくしてから、もう一度お試しください'
+    ],
+    [ErrorType.UnknownError]: ['Please try again after a while']
   }
 }
 
 const getLocaleErrorMap = () => {
-  // TODO: Change the entities returned by language
-  return errorMap.ja
+  const lang = getUserLang()
+  return errorMap[lang]
 }
 
 export const getErrorMessageVO = (

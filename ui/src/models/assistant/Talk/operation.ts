@@ -1,10 +1,9 @@
-import { Dispatch } from 'redux'
-
 import { AnimationPreset } from 'utils/MotionManager/presets/animation'
+import { Dispatch } from 'modules/reducer'
 import { MotionManager } from 'utils/MotionManager'
 import { OperationType } from './type'
-import { addMessage } from 'modules/messages'
 import { getReplyMessageVO } from './reply'
+import { sendAssistantMessage } from 'modules/messages'
 
 /**
  * Operate according to the accessory type and the user's instructions.
@@ -25,13 +24,13 @@ export const runOperation = (
   switch (operationType) {
     case OperationType.Greeting: {
       motionManager?.animate(AnimationPreset.Salute)
-      dispatch(addMessage({ messageVO }))
+      dispatch(sendAssistantMessage({ messageVO }))
       return true
     }
     case OperationType.Hungry: {
       const messageVO = getReplyMessageVO(operationType)
       motionManager?.animate(AnimationPreset.Salute)
-      dispatch(addMessage({ messageVO }))
+      dispatch(sendAssistantMessage({ messageVO }))
       return true
     }
   }

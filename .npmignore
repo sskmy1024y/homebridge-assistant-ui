@@ -1,0 +1,12 @@
+.github/
+data/
+node_modules/
+src/
+test/
+ui/
+.eslintrc.json
+.gitignore
+.prettierrc
+tsconfig.build.json
+tsconfig.json
+*.log

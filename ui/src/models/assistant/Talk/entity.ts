@@ -1,7 +1,9 @@
 import { EntityMapType, OperationType } from './type'
+import { getUserLang } from '../utils'
 
 type LocaleEntityMapType = {
   ja: EntityMapType
+  en: EntityMapType
 }
 
 const entityMap: LocaleEntityMapType = {
@@ -24,10 +26,20 @@ const entityMap: LocaleEntityMapType = {
       'おなか空いた',
       'おなかすいた'
     ]
+  },
+  en: {
+    [OperationType.Greeting]: [
+      'hi',
+      'hello',
+      'good morning',
+      'good evening',
+      'good night'
+    ],
+    [OperationType.Hungry]: ['hungry']
   }
 }
 
 export const getEntityMap = () => {
-  // TODO: Change the entities returned by language
-  return entityMap.ja
+  const language = getUserLang()
+  return entityMap[language]
 }
