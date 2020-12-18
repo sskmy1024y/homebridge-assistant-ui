@@ -23,13 +23,13 @@ export const runOperation = (
 
   switch (operationType) {
     case OperationType.Greeting: {
-      motionManager?.animate(AnimationPreset.Salute)
+      motionManager?.animate(AnimationPreset.WaveHand)
       dispatch(sendAssistantMessage({ messageVO }))
       return true
     }
     case OperationType.Hungry: {
       const messageVO = getReplyMessageVO(operationType)
-      motionManager?.animate(AnimationPreset.Salute)
+      motionManager?.animate(AnimationPreset.Think)
       dispatch(sendAssistantMessage({ messageVO }))
       return true
     }

@@ -171,11 +171,37 @@ const tilt: VRMPose = {
   }
 }
 
+const waveHandRight: VRMPose = {
+  [VRMSchema.HumanoidBoneName.RightHand]: {
+    rotation: [-0.21, 0.03, 0.07, 0.97]
+  },
+  [VRMSchema.HumanoidBoneName.RightLowerArm]: {
+    rotation: [-0.02, 0.62, 0.56, 0.55]
+  },
+  [VRMSchema.HumanoidBoneName.RightUpperArm]: {
+    rotation: [0.16, 0.2, -0.51, 0.82]
+  }
+}
+
+const waveHandLeft: VRMPose = {
+  [VRMSchema.HumanoidBoneName.RightHand]: {
+    rotation: [-0.3, 0.07, 0.03, 0.95]
+  },
+  [VRMSchema.HumanoidBoneName.RightLowerArm]: {
+    rotation: [-0.12, 0.86, 0.22, 0.44]
+  },
+  [VRMSchema.HumanoidBoneName.RightUpperArm]: {
+    rotation: [0.16, 0.2, -0.56, 0.79]
+  }
+}
+
 export const PosePreset = {
   Standerd: standerdPose,
   Salute: salute,
   Waiting: waiting,
   Think: think,
-  Tilt: tilt
+  Tilt: tilt,
+  WaveHandRight: waveHandRight,
+  WaveHandLeft: waveHandLeft
 } as const
 export type PosePreset = keyof typeof PosePreset
