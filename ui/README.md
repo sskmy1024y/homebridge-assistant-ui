@@ -1,4 +1,4 @@
-# react-redux-template
+# homebridge-assistant-ui
 
 ### 📚Include packages
 

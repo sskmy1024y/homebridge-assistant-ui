@@ -41,7 +41,7 @@ const errorMap: LocaleErrorMapType = {
     ],
     [ErrorType.OperationTimeoutError]: [
       'The device did not respond',
-      'しばらくしてから、もう一度お試しください'
+      'Please try again after a while.'
     ],
     [ErrorType.UnknownError]: ['Please try again after a while']
   }

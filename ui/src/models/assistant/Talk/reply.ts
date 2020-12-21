@@ -25,7 +25,7 @@ export const getReplyMessageVO = (operationType: OperationType) => {
     return toMessageVO(message)
   }
 
-  const replyMessageMap = entityMap.ja
+  const replyMessageMap = entityMap[lang]
   const messageMap = replyMessageMap[operationType]
   const randomIndex = Math.floor(Math.random() * messageMap.length)
   const message = messageMap[randomIndex]
