@@ -102,6 +102,17 @@ export function useInteractJS<T extends Interact.Target>(
   }, [isEnabled])
 
   useEffect(() => {
+    setPosition({
+      width,
+      height,
+      x,
+      y,
+      ...position
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [position])
+
+  useEffect(() => {
     return disable
   }, [])
 

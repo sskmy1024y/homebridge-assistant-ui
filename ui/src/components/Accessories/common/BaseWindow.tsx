@@ -37,8 +37,9 @@ export default function BaseWindow({
         dispatch(updateLayout({ userId, accessoryUUID: uuid, ...position }))
       }
     },
-    [userId, dispatch, uuid]
+    [dispatch, userId, uuid]
   )
+
   const { ref, interactStyle } = useInteractJS<HTMLDivElement>(
     initialLayout,
     onChanged

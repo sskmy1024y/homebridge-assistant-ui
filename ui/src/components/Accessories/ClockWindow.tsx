@@ -1,5 +1,6 @@
 import { BaseWindow } from './common'
 import { Colors } from 'theme'
+import { Constants } from 'utils/constants'
 import { format2Digit } from 'utils/datetime'
 import { useDidMount, useState } from 'hooks'
 import React from 'react'
@@ -25,7 +26,7 @@ const ClockWindow = ({ style }: Props) => {
 
   return (
     <BaseWindow
-      uuid={'clockWindow'}
+      uuid={Constants.uuid.clock}
       minWidth={276}
       minHeight={100}
       style={style}

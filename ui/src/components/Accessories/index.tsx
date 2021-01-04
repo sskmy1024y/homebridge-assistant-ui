@@ -47,11 +47,6 @@ const Accessories = () => {
     }
   }, [dispatch, wsService])
 
-  useEffect(() => {
-    // FIXME:
-    console.log('fetched Accessories', accessories)
-  }, [accessories])
-
   const accessoryList = useMemo(
     () =>
       Array.from(accessories.values()).map(accessory => {
@@ -65,11 +60,15 @@ const Accessories = () => {
             )
           }
           default:
-            return undefined
+            return null
         }
       }),
     [accessories]
   )
+
+  if (!userId) {
+    return null
+  }
 
   return (
     <>

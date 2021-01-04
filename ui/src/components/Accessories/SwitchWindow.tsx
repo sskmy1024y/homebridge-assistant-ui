@@ -29,7 +29,7 @@ const SwitchWindow = React.memo(({ accessory, style }: Props) => {
     transform: `scale(${active ? 0.45 : 1})`
   })
 
-  const { o } = useSpring({
+  const { o } = useSpring<{ o: number }>({
     o: active ? 0 : 1
   })
 
