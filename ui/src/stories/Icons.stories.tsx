@@ -6,6 +6,7 @@ import Provider from 'stories/Provider'
 
 import { Colors } from 'theme'
 import AirIcon from 'components/icons/AirIcon'
+import HumidityIcon from 'components/icons/HumidityIcon'
 import LightOffIcon from 'components/icons/LightIcon/Off'
 import LightOnIcon from 'components/icons/LightIcon/On'
 import MicIcon from 'components/icons/MicIcon'
@@ -32,6 +33,7 @@ storiesAll.add('Icons', () => {
           <LightOnIcon size={size} color={color} />
           <LightOffIcon size={size} color={color} />
           <TemplatureIcon size={size} color={color} />
+          <HumidityIcon size={size} color={color} />
           <AirIcon size={size} color={color} />
           <PowerIcon size={size} color={color} />
           <MicIcon size={size} color={color} />
@@ -88,6 +90,9 @@ storiesAccessory.add('LightOffIcon', () => (
 ))
 storiesAccessory.add('TemplatureIcon', () => (
   <TemplatureIcon {...constantIconProps} />
+))
+storiesAccessory.add('HumidityIcon', () => (
+  <HumidityIcon {...constantIconProps} />
 ))
 storiesAccessory.add('AirIcon', () => <AirIcon {...constantIconProps} />)
 storiesAccessory.add('PowerIcon', () => <PowerIcon {...constantIconProps} />)
