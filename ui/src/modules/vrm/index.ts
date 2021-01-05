@@ -6,6 +6,7 @@ export * from './reducers'
 export * from './selectors'
 
 export interface State {
+  fetchStatus: 'ok' | 'error' | null
   vrmPath: string
   assistant: Assistant | null
   camera: {
@@ -15,6 +16,7 @@ export interface State {
 }
 
 export const initialState: State = {
+  fetchStatus: null,
   vrmPath: '',
   assistant: null,
   camera: {

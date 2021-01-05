@@ -28,6 +28,12 @@ export function reducer(state: State = initialState, action: Action): State {
         }
       }
     }
+    case ActionNames.SetFetchStatus: {
+      return {
+        ...state,
+        fetchStatus: action.payload.status
+      }
+    }
     default:
       return state
   }

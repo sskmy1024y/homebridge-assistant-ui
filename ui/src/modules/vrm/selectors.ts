@@ -15,3 +15,8 @@ export const useVRMPath = () => {
   const vrmPath = useSelector(state => state.vrm.vrmPath)
   return useMemo(() => vrmPath ?? '', [vrmPath])
 }
+
+export const useVRMFetchStatus = () => {
+  const status = useSelector(state => state.vrm.fetchStatus)
+  return useMemo(() => status, [status])
+}

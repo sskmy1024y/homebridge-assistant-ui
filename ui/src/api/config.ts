@@ -7,6 +7,7 @@ export interface AssistantConfigApiResponseDto {
     vrmPath: string
     hbServiceUserId: string
     hbServiceHost: string
+    hbServiceToken: string
     assistantName: string
     camera: {
       position: {
@@ -23,10 +24,28 @@ export interface AssistantConfigApiResponseDto {
   }
 }
 
+enum AuthType {
+  withPassword,
+  withToken
+}
+
 export async function fetchAssistantConfig(username: string, password: string) {
   const response = await post<AssistantConfigApiResponseDto>('auth/config', {
     username,
-    password
+    password,
+    type: AuthType.withPassword
+  })
+  return response.parsedBody?.body
+}
+
+export async function fetchAssistantConfigFromToken(
+  username: string,
+  accessToken: string
+) {
+  const response = await post<AssistantConfigApiResponseDto>('auth/config', {
+    username,
+    accessToken,
+    type: AuthType.withToken
   })
   return response.parsedBody?.body
 }

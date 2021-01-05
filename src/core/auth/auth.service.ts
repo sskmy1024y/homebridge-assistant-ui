@@ -11,6 +11,14 @@ export class AuthService {
     return this._hbServiceHostname
   }
 
+  get hbServiceToken() {
+    return this._hbServiceToken
+  }
+
+  set hbServiceToken(token: string) {
+    this._hbServiceToken = token
+  }
+
   public prepareHbServiceRequest(req: FastifyRequest, port: number) {
     const host = req.hostname.match(/(.*):\d{1,5}/i)?.[1] ?? req.hostname
     this._hbServiceHostname = `${req.protocol}://${host}:${port}`
