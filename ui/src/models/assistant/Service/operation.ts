@@ -7,6 +7,7 @@ import { AnimationPreset } from 'utils/MotionManager/presets/animation'
 import { Dispatch } from 'modules/reducer'
 import { ErrorType, OperationType } from './type'
 import { MotionManager } from 'utils/MotionManager'
+import { Templature } from 'models/accessories/Templature'
 import { getErrorMessageVO } from './error'
 import { getReplyMessageVO } from './reply'
 import { sendAssistantMessage } from 'modules/messages'
@@ -39,19 +40,21 @@ export const runOperation = (
   // Calculate the time from the time of the event to the timeout
   const timeoutLimit = Date.now() + TIMEOUT_OFFSET
 
-  // Declare a function to execute on success
-  const onSuccess = () => {
-    if (Date.now() < timeoutLimit) {
-      const messageVO = getReplyMessageVO(operationType, accessory.serviceName)
-
-      motionManager?.animate(AnimationPreset.Salute)
-      dispatch(sendAssistantMessage({ messageVO }))
-      clearTimeout(timeout)
-    }
-  }
-
-  switch (accessory.type) {
+  switch (accessory.humanType) {
     case HomeKitTypes.Switch: {
+      // Declare a function to execute on success
+      const onSuccess = () => {
+        if (Date.now() < timeoutLimit) {
+          const messageVO = getReplyMessageVO(operationType, {
+            DEVICE_NAME: accessory.serviceName
+          })
+
+          motionManager?.animate(AnimationPreset.Salute)
+          dispatch(sendAssistantMessage({ messageVO }))
+          clearTimeout(timeout)
+        }
+      }
+
       switch (operationType) {
         case OperationType.TurnOff: {
           accessory.updateValue(false, ws)
@@ -64,6 +67,18 @@ export const runOperation = (
           return true
         }
       }
+      return false
+    }
+    case HomeKitTypes.TemperatureSensor: {
+      clearTimeout(timeout)
+      const messageVO = getReplyMessageVO(operationType, {
+        TEMP: `${accessory.value}${
+          (accessory as Templature).unit === 'celsius' ? '℃' : '℉'
+        }`
+      })
+      motionManager?.animate(AnimationPreset.Salute)
+      dispatch(sendAssistantMessage({ messageVO }))
+      return true
     }
   }
   return false
