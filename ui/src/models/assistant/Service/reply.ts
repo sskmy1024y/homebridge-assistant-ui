@@ -17,6 +17,14 @@ const entityMap: LocaleReplyMapType = {
       '{{ DEVICE_NAME }}をつけました',
       '了解しました！',
       '了解です'
+    ],
+    [OperationType.Templature]: [
+      '現在の気温は{{ TEMP }}です',
+      '{{ TEMP }}です'
+    ],
+    [OperationType.Humidity]: [
+      '現在の湿度は{{ HUMIDITY }}です',
+      '{{ HUMIDITY }}です'
     ]
   },
   en: {
@@ -29,13 +37,24 @@ const entityMap: LocaleReplyMapType = {
       'I turned on the {{ DEVICE_NAME }}',
       'OK!',
       'I did it'
+    ],
+    [OperationType.Templature]: [
+      'Current temperature is {{ TEMP }}',
+      '{{ TEMP }}'
+    ],
+    [OperationType.Humidity]: [
+      'Current humidity is {{ HUMIDITY }}',
+      'Humidity is {{HUMIDITY}}',
+      '{{ HUMIDITY }}'
     ]
   }
 }
 
 export const getReplyMessageVO = (
   operationType: OperationType,
-  deviceName: string
+  interpolateValue: {
+    [key: string]: string
+  }
 ) => {
   const lang = getUserLang()
   const replyMessageMap = entityMap[lang]
@@ -43,9 +62,7 @@ export const getReplyMessageVO = (
 
   const randomIndex = Math.floor(Math.random() * messageMap.length)
 
-  const message = interpolate(messageMap[randomIndex], {
-    DEVICE_NAME: deviceName
-  })
+  const message = interpolate(messageMap[randomIndex], interpolateValue)
 
   return toMessageVO(message)
 }

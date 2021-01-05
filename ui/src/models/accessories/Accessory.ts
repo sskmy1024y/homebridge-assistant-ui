@@ -25,4 +25,8 @@ export abstract class Accessory {
   get type() {
     return this.accessory.type
   }
+
+  get humanType() {
+    return this.accessory.humanType
+  }
 }

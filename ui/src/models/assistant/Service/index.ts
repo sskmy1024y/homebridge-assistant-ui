@@ -7,6 +7,7 @@ import { AnimationPreset } from 'utils/MotionManager/presets/animation'
 import { ErrorType, OperationType } from './type'
 import { getEntityMap } from './entity'
 import { getErrorMessageVO } from './error'
+import { guessAccessory } from './guess'
 import { runOperation } from './operation'
 import { sendAssistantMessage } from 'modules/messages'
 
@@ -66,7 +67,9 @@ export const run = (
   }
 
   const accerrosiesState = rootState.service.accessories
-  const findAccessory = findIncludedAccessory(userMessage, accerrosiesState)
+  const findAccessory =
+    findIncludedAccessory(userMessage, accerrosiesState) ??
+    guessAccessory(findOperation.operationType, accerrosiesState)
 
   if (findAccessory === undefined) {
     const messageVO = getErrorMessageVO(ErrorType.AccessoryNotFoundError)

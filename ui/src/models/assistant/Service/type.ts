@@ -1,7 +1,9 @@
 /** OperationType: Name of the operation to perform */
 export const OperationType = {
   TurnOn: 'TURN_ON',
-  TurnOff: 'TURN_OFF'
+  TurnOff: 'TURN_OFF',
+  Templature: 'TEMPLATURE',
+  Humidity: 'HUMIDITY'
 } as const
 export type OperationType = typeof OperationType[keyof typeof OperationType]
 
