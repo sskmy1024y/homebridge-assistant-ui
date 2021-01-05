@@ -11,7 +11,7 @@
 
 ## 🧐 What is this?
 
-Homebridge now has an assistant just for you.  
+Homebridge now has a visual assistant just for you.  
 This plugin provides you with a 3D avatar-based assistant to control your home appliances and a PDS-like logging feature.  
 As for the 3D avatar, you can use any avatar you like.
 Just by talking to it, you will be able to control your home appliances.
@@ -32,9 +32,18 @@ In your browser, go to `http://localhost:4200`.
 
 ## 🎁 What you can do.
 
-* Control appliances connected to Homebridge (Switch only for now)
+* Control appliances connected to Homebridge
 * Talk with a 3D avatar of your choice
 * Collect logs of conversations and home appliance operations
+
+### Current Support Accessory
+
+|     | accessory                                                                   |
+| --- | --------------------------------------------------------------------------- |
+| ✅   | Switch                                                                      |
+| ✅   | Templature Sensor                                                           |
+| ✅   | Humidity Sensor                                                             |
+| -   | <small>Others develop additionally. Your help would be appreciated.</small> |
 
 ## 🖥 Demo
 
