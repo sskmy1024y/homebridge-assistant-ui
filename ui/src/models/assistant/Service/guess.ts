@@ -33,5 +33,13 @@ export const guessAccessory = (
       }
       return undefined
     }
+    case OperationType.Humidity: {
+      for (const accessory of accessories) {
+        if (accessory.humanType === HomeKitTypes.HumiditySensor) {
+          return accessory
+        }
+      }
+      return undefined
+    }
   }
 }

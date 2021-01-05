@@ -30,12 +30,14 @@ const entityMap: LocaleEntityMapType = {
       '気温',
       '室温',
       '温度'
-    ]
+    ],
+    [OperationType.Humidity]: ['部屋の湿度', '湿度', '湿り気']
   },
   en: {
     [OperationType.TurnOff]: ['off', 'turn off'],
     [OperationType.TurnOn]: ['turn on', 'on'],
-    [OperationType.Templature]: ['Room temperature', 'temperature']
+    [OperationType.Templature]: ['Room temperature', 'temperature'],
+    [OperationType.Humidity]: ['Current humidity', 'humidity']
   }
 }
 

@@ -18,7 +18,14 @@ const entityMap: LocaleReplyMapType = {
       '了解しました！',
       '了解です'
     ],
-    [OperationType.Templature]: ['現在の気温は{{ TEMP }}です', '{{ TEMP }}です']
+    [OperationType.Templature]: [
+      '現在の気温は{{ TEMP }}です',
+      '{{ TEMP }}です'
+    ],
+    [OperationType.Humidity]: [
+      '現在の湿度は{{ HUMIDITY }}です',
+      '{{ HUMIDITY }}です'
+    ]
   },
   en: {
     [OperationType.TurnOff]: [
@@ -34,6 +41,11 @@ const entityMap: LocaleReplyMapType = {
     [OperationType.Templature]: [
       'Current temperature is {{ TEMP }}',
       '{{ TEMP }}'
+    ],
+    [OperationType.Humidity]: [
+      'Current humidity is {{ HUMIDITY }}',
+      'Humidity is {{HUMIDITY}}',
+      '{{ HUMIDITY }}'
     ]
   }
 }

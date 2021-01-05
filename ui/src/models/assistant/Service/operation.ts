@@ -80,6 +80,17 @@ export const runOperation = (
       dispatch(sendAssistantMessage({ messageVO }))
       return true
     }
+    case HomeKitTypes.HumiditySensor: {
+      clearTimeout(timeout)
+      const messageVO = getReplyMessageVO(operationType, {
+        HUMIDITY: `${accessory.value}${
+          (accessory as Templature).unit === 'percentage' ? '%' : ''
+        }`
+      })
+      motionManager?.animate(AnimationPreset.Salute)
+      dispatch(sendAssistantMessage({ messageVO }))
+      return true
+    }
   }
   return false
 }

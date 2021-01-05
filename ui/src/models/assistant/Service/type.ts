@@ -2,7 +2,8 @@
 export const OperationType = {
   TurnOn: 'TURN_ON',
   TurnOff: 'TURN_OFF',
-  Templature: 'TEMPLATURE'
+  Templature: 'TEMPLATURE',
+  Humidity: 'HUMIDITY'
 } as const
 export type OperationType = typeof OperationType[keyof typeof OperationType]
 
