@@ -1,16 +1,13 @@
+import { Constants } from 'utils/constants'
 import { HomeKitTypes } from 'models/accessories/HomeKitTypes'
 import { ServiceNS } from 'models/services'
 import { Switch } from 'models/accessories/Switch'
 import { fetchLayout } from 'modules/layout/operations'
-import {
-  getAuthToken,
-  useHbServiceHost,
-  useHbServiceUserId
-} from 'modules/auth'
-import { getVRMConfig } from 'modules/vrm/operations'
+import { getVRMConfigFromToken } from 'modules/vrm/operations'
 import { initWsServiceEvent, useConnectToNamespace } from 'modules/ws'
 import { useAccessories } from 'modules/service/selector'
-import { useDispatch, useEffect, useMemo } from 'hooks'
+import { useDispatch, useEffect, useLocalStorage, useMemo } from 'hooks'
+import { useHbServiceUserId } from 'modules/auth'
 import ClockWindow from './ClockWindow'
 import React from 'react'
 import SwitchWindow from './SwitchWindow'
@@ -21,21 +18,15 @@ import SwitchWindow from './SwitchWindow'
 const Accessories = () => {
   const dispatch = useDispatch()
   const userId = useHbServiceUserId()
-  const hbServiceHost = useHbServiceHost()
   const accessories = useAccessories()
   const wsService = useConnectToNamespace(ServiceNS.Accessories)
 
-  useEffect(() => {
-    dispatch(getVRMConfig({ username: 'admin', password: 'admin' }))
-  }, [dispatch])
+  const [username] = useLocalStorage(Constants.localStorage.username, '')
+  const [accessToken] = useLocalStorage(Constants.localStorage.accessToken, '')
 
   useEffect(() => {
-    if (hbServiceHost) {
-      dispatch(
-        getAuthToken({ usename: 'admin', password: 'admin', hbServiceHost })
-      )
-    }
-  }, [hbServiceHost, dispatch])
+    dispatch(getVRMConfigFromToken({ username, accessToken }))
+  }, [accessToken, dispatch, username])
 
   useEffect(() => {
     if (userId) dispatch(fetchLayout(userId))
@@ -46,6 +37,11 @@ const Accessories = () => {
       initWsServiceEvent(ServiceNS.Accessories, wsService, dispatch)
     }
   }, [dispatch, wsService])
+
+  useEffect(() => {
+    // FIXME:
+    console.log('fetched Accessories', accessories)
+  }, [accessories])
 
   const accessoryList = useMemo(
     () =>
@@ -60,15 +56,11 @@ const Accessories = () => {
             )
           }
           default:
-            return null
+            return undefined
         }
       }),
     [accessories]
   )
-
-  if (!userId) {
-    return null
-  }
 
   return (
     <>

@@ -3,10 +3,14 @@ import { VRM } from '@pixiv/three-vrm'
 
 export enum ActionNames {
   InitAssistant = 'INIT_ASSISTANT',
-  SetVRMConfig = 'SET_VRM_CONFIG'
+  SetVRMConfig = 'SET_VRM_CONFIG',
+  SetFetchStatus = 'SET_FETCH_STATUS'
 }
 
-export type Action = InitAssistantAction | SetVRMConfigAction
+export type Action =
+  | InitAssistantAction
+  | SetVRMConfigAction
+  | SetFetchStatusAction
 
 interface InitAssistantPayload {
   vrm: VRM
@@ -28,6 +32,10 @@ interface SetVRMConfigPayload {
   }
 }
 
+interface SetFetchStatusPayload {
+  status: 'ok' | 'error' | null
+}
+
 export type InitAssistantAction = TypedAction<
   ActionNames.InitAssistant,
   InitAssistantPayload
@@ -36,6 +44,11 @@ export type InitAssistantAction = TypedAction<
 export type SetVRMConfigAction = TypedAction<
   ActionNames.SetVRMConfig,
   SetVRMConfigPayload
+>
+
+export type SetFetchStatusAction = TypedAction<
+  ActionNames.SetFetchStatus,
+  SetFetchStatusPayload
 >
 
 export function initMotionManager(
@@ -50,6 +63,15 @@ export function initMotionManager(
 export function setVRMConfig(payload: SetVRMConfigPayload): SetVRMConfigAction {
   return {
     type: ActionNames.SetVRMConfig,
+    payload
+  }
+}
+
+export function setFetchStatus(
+  payload: SetFetchStatusPayload
+): SetFetchStatusAction {
+  return {
+    type: ActionNames.SetFetchStatus,
     payload
   }
 }
