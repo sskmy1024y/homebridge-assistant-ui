@@ -17,5 +17,6 @@ if (!process.env.AUI_STORAGE_PATH) {
 
 process.env.HB_CONFIG_PATH = path.resolve(process.env.AUI_STORAGE_PATH, 'config.json')
 process.env.AUI_CONFIG_PATH = path.resolve(process.env.AUI_STORAGE_PATH, 'assistant', 'config.json')
+process.env.AUI_DATABASE_PATH = path.resolve(process.env.AUI_STORAGE_PATH, 'assistant', 'hb-assistant.sqlite')
 
 import('../main')

@@ -11,7 +11,7 @@ let homebridge
 
 export = api => {
   homebridge = api
-  homebridge.registerPlatform('homebridge-assistant-ui', 'config', HomebridgeAssistantUi)
+  homebridge.registerPlatform('homebridge-assistant-ui', 'assistant-ui', HomebridgeAssistantUi)
 }
 
 class HomebridgeAssistantUi {
@@ -20,9 +20,9 @@ class HomebridgeAssistantUi {
   constructor(log, config) {
     this.log = log
 
-    process.env.UIX_CONFIG_PATH = homebridge.user.configPath()
-    process.env.UIX_STORAGE_PATH = homebridge.user.storagePath()
-    process.env.UIX_PLUGIN_NAME = config.name || 'homebridge-assistant-ui'
+    process.env.AUI_STORAGE_PATH = homebridge.user.storagePath()
+    process.env.HB_CONFIG_PATH = path.resolve(process.env.AUI_STORAGE_PATH, 'config.json')
+    process.env.AUI_PLUGIN_NAME = config.name || 'homebridge-assistant-ui'
 
     commander.allowUnknownOption().parse(process.argv)
 
