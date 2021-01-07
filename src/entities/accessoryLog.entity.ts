@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm'
 
-@Entity()
+@Entity('accessory-log')
 export class AccessoryLog {
   @PrimaryGeneratedColumn('uuid')
   uuid: string

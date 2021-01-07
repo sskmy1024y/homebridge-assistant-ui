@@ -13,7 +13,7 @@ async function bootstrap() {
 
   const configService: ConfigService = app.get(ConfigService)
 
-  const uiDirPath = process.env.NODE_ENV === 'production' ? 'public' : 'ui/public'
+  const uiDirPath = process.env.NODE_ENV === 'development' ? 'ui/public' : 'public'
 
   // serve index.html without a cache
   app.getHttpAdapter().get('/', async (req, res) => {
