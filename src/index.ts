@@ -6,6 +6,7 @@ import * as path from 'path'
 import * as child_process from 'child_process'
 import * as commander from 'commander'
 import * as semver from 'semver'
+import * as fs from 'fs'
 
 let homebridge
 
@@ -22,9 +23,14 @@ class HomebridgeAssistantUi {
 
     process.env.AUI_STORAGE_PATH = homebridge.user.storagePath()
     process.env.HB_CONFIG_PATH = path.resolve(process.env.AUI_STORAGE_PATH, 'config.json')
+    process.env.AUI_DATABASE_PATH = path.resolve(process.env.AUI_STORAGE_PATH, 'assistant', 'hb-assistant.sqlite')
     process.env.AUI_PLUGIN_NAME = config.name || 'homebridge-assistant-ui'
 
     commander.allowUnknownOption().parse(process.argv)
+
+    if (!fs.existsSync(process.env.AUI_DATABASE_PATH)) {
+      child_process.execSync(`hb-assistant-ui-migrate`)
+    }
 
     if (!semver.satisfies(process.version, '>=10.17.0')) {
       const msg = `Node.js v10.17.0 higher is required. You may experience issues running this plugin running on ${process.version}.`
