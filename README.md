@@ -25,7 +25,6 @@ Just by talking to it, you will be able to control your home appliances.
 
 ```
 npm install -g homebridge-assistant-ui
-sudo homebridge-assistant-ui
 ```
 
 In your browser, go to `http://localhost:4200`.
