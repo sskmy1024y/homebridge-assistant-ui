@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "homebridge-assistant-ui",
+  "pluginAlias": "assistant-ui",
   "pluginType": "platform",
   "singular": true,
   "schema": {
