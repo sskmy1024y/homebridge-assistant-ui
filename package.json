@@ -1,5 +1,6 @@
 {
   "name": "homebridge-assistant-ui",
+  "displayName": "Homebridge Assistant UI",
   "version": "0.0.1-beta.16",
   "description": "Homebridege Assistant UI provides you with your own home appliance control assistant.",
   "author": "sho <sskmy1024.y@gmail.com>",
